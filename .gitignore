@@ -1,0 +1,5 @@
+env/ 
+.idea/
+mydatabase
+venv/
+venv2/
