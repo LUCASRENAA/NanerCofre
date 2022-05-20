@@ -33,6 +33,7 @@ urlpatterns = [
                   path('baixar/<id>', views.descer_arquivo_path),
                   path('criptografar_texto/', views.criptografar_texto_submit),
                   path('descriptografar_texto/', views.descriptografar_texto),
+                  path('logout/', views.logout_user),
 
                   path('login/', views.login_user),
     path('login/submit',views.submit_login),

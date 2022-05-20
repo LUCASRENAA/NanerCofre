@@ -118,7 +118,7 @@ def senha_fernet(senha):
 def hash_chave(key):
     import hashlib
     hash_Chave = hashlib.sha256()
-    chave_que_vai = str(key.decode("ascii")).encode(encoding='ascii')
+    chave_que_vai = str(key).encode(encoding='utf8')
 
     hash_Chave.update(chave_que_vai)
 
@@ -128,27 +128,26 @@ def hash_chave(key):
 @login_required(login_url='/login/')
 def inicio_submit(request):
     senha = request.POST.get('senha')
-    senha_vai = senha
+
     #formato do fernet de senha
-    key = senha_fernet(senha)
+    key = str(senha)
+
+    if len(key) < 44:
+        key = key + "a" * (43 - len(key)) + "="
+
+    key = key[0:44]
 
     #hash da senha
-    senha = bytes(senha, encoding='ascii')
-    #hash_texto_chave = hash_chave(senha_vai)
-    try:
-        hash_texto_chave = hash_chave(senha_vai)
-    except:
-        pass
 
-    print(senha)
     try:
         cofre = Hash_Senha_Cofre.objects.get(
                                         usuario= request.user)
-        key = "Você já tem uma senha"
-        hash_texto_chave = hash_chave(str(request.POST.get('senha').replace("b'","").replace("'","")).encode(encoding='utf-8'))
+        hash_texto_chave = hash_chave(key)
         if (cofre.hash == hash_texto_chave):
-            return render(request, 'cofre.html',{'senha':senha_vai,'cofre':Arquivo.objects.filter(hash__usuario=request.user),
+            return render(request, 'cofre.html',{'senha':key,'cofre':Arquivo.objects.filter(hash__usuario=request.user),
                                                  'senhas_cofre': Senha_Criptografada.objects.filter(usuario=request.user)})
+
+
 
         return HttpResponse("senha errada")
 
@@ -156,7 +155,7 @@ def inicio_submit(request):
         hash_texto_chave = hash_chave(key)
         Hash_Senha_Cofre.objects.create(hash=hash_texto_chave,
                                         usuario=request.user)
-    dados = {"key":key}
+    dados = {"key":senha}
     print(key)
     return render(request,'exibir_senha.html',dados)
 
@@ -260,7 +259,18 @@ def subir_arquivo(request):
     criptografar(str(request.POST.get('senha').replace("b'","").replace("'","")).encode(encoding='utf-8'),file,dataAgora)
     #decripitar(key)
 
-    Arquivo.objects.create(hash=Hash_Senha_Cofre.objects.get(hash=hash_chave(str(request.POST.get('senha').replace("b'","").replace("'","")).encode(encoding='utf-8'))) ,local="salvar_Arquivos/"+str(file),dataAgora=dataAgora)
+    senha = request.POST.get('senha')
+
+    # formato do fernet de senha
+    key = str(senha)
+
+    if len(key) < 44:
+        key = key + "a" * (43 - len(key)) + "="
+
+    key = key[0:44]
+
+
+    Arquivo.objects.create(hash=Hash_Senha_Cofre.objects.get(hash=hash_chave(str(senha)),usuario=request.user) ,local="salvar_Arquivos/"+str(file),dataAgora=dataAgora)
 
     dados = {"senha":key}
     return redirect('/')
