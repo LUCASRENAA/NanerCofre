@@ -1,59 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Cofre</title>
+<link rel="stylesheet" type="text/css" href="/static/css/cofre.css">
 
-<link rel="style" type="text/css" href="/static/css/style.css">
+    <style>
 
-                    <input name="senha" value="{{ senha }}" id="senha" hidden>
-<script  src="https://code.jquery.com/jquery-3.1.1.min.js">
-
-</script>
-
-
-
- {% include "cabeca.html" %}
-
-
-
-
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-
-
-   <style>
-      #centro
-      {
-      position: absolute;
-	left: 42%;
-	top: 20%
-      }
-
-      body{
-        background: #000000;
-      }
 
     </style>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="container">
+      <header>
+       <nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/static/img/Luner.svg"  class="d-inline-block align-top form-control" alt="">
+
+  </a>
+</nav>
+          </header>
+      <main>
+          <h1>Tipos</h1>
+<p></p>
+          <img>Senhas
+          <p></p>
+
+          <img>Arquivos
+<p></p>
+
+          <script src="/static/js/cofre.js"></script>
 
 
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
-</head>
-<body>
-
- {% include "padrao_inicio.html" %}
+          <button onclick="aparecer_senhas()">Visualizar Senhas</button>
+          <p></p>
 
 
+          <button onclick="aparecer_pastas()">Visualizar Arquivos</button>
+<!-- Button trigger modal -->
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+Salvar senhas
+</button>
 
 
-
-
-
-
- <!-- Button trigger modal -->
-
-
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
+Salvar Arquivos
+</button>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -65,23 +63,6 @@
         </button>
       </div>
       <div class="modal-body">
-          <blockquote class="blockquote mb-0">
-<form action="/upload/" enctype="multipart/form-data" method="post">
-    {% csrf_token %}
-    <blockquote class="blockquote mb-0">
-<label>Subir arquivo</label>
-        <input name="file" type="file" class="form-control">
-
-        <p></p>
-
-        <input name="senha" value="{{ senha }}" hidden>
-
-      <footer class="blockquote-footer"></footer>
-    </blockquote>
-        <input type="submit"  class="btn btn-primary form-control" value="Subir arquivo">
-
-          </form>
-<hr>
  <form action="/criptografar_texto/" enctype="multipart/form-data" method="post">
     {% csrf_token %}
 
@@ -99,41 +80,222 @@
         <hr>
 
 
-      <footer class="blockquote-footer"></footer>
-    </blockquote>
-      </div>
       <div class="modal-footer">
 
       </div>
-    </div>
+
+  </div>
+</div>
   </div>
 </div>
 
 
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Coloque arquivos no servidor ou salve senhas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <blockquote class="blockquote mb-0">
+<form action="/upload/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <blockquote class="blockquote mb-0">
+<label>Subir arquivo</label>
+        <input name="file" type="file" class="form-control">
 
-<div id="centro">
+        <p></p>
+
+        <input name="senha" value="{{ senha }}" hidden>
+
+    </blockquote>
+        <input type="submit"  class="btn btn-primary form-control" value="Subir arquivo">
+
+          </form>
+
+
+
+      <div class="modal-footer">
+
+      </div>
+          </blockquote>
+
+    </div>
+  </div>
 </div>
 
+</div>
+
+      </main>
+      <cachorro>
+                            <div class="container-fluid quem-somos text-center margin">
+
+          Site:
+                                <p></p>
+      <img src="/static/img/pasta.jpg" class="rounded">
+                                <input id="site"  class="form-control" hidden>
+                                <p></p>
+                                <label id="site_mostrar"></label>
+
+<p id="uri"></p>
 
 
-<div class="container">
+
+                                <fieldset>
+                         <div class="form-group">
+    <label for="titulo">Titulo</label>
+    <input type="text" class="form-control" id="titulo">
+  </div>
+               <div class="form-group">
+    <label for="nome">Email/Username</label>
+    <input type="text" class="form-control" id="nome">
+  </div>
+
+                                               <div class="form-group">
+    <label for="senha_mostrar">Senha</label>
+    <input type="password" class="form-control" id="senha_mostrar">
+  </div>
 
 
-    <div class="card">
-  <div class="card-header">
-Faça o donwload</div>
-  <div class="card-body">
-      <img src="/static/img/donwload.jpg" width="50px" height="50px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+</fieldset>
 
-      Coloque arquivos no servidor
-      <hr>
-</img>
-    <blockquote class="blockquote mb-0">
+          <p></p>
+<button>Editar</button>
+          <button>Excluir</button>
+                            </div>
 
-        <h2>Clique para baixar seus arquivos</h2>
+      </cachorro>
+
+      <aside>
+                            <div class="container-fluid quem-somos text-center margin">
+
+      <input class="form-control mr-sm-2"  type="search" placeholder="Procurar" aria-label="Search">
+<p></p>
+          <div id="ver_senhas">
+            <h2>Veja suas senhas salvas</h2>
         <hr>
-        <img src="/static/img/pasta.jpg" width="50px" height="50px" onclick="aparecer_pastas()"> <i id="ver_pasta">Ver pastas</i>
-        <div id="arquivos" >
+        <p></p>
+                  <script>
+
+function api(senha,titulo,crsf_token,variavel,id){
+
+    var request = $.ajax({
+      url: "/descriptografar_texto/",
+      type: "POST",
+      data: {key : senha, texto : titulo, csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
+
+    request.done(function(msg) {
+      $("#log"+variavel+id).html( msg );
+            $("#log"+variavel+id).html( msg );
+
+    });
+
+    request.fail(function(jqXHR, textStatus) {
+      alert( "Request failed: " + textStatus );
+    });
+}
+
+function ContarSegundos(){
+    var segundos = 10;
+}
+
+ function atualizar(id) {
+
+     var valor = document.getElementById("lognome"+id).innerText;
+    var valor2 = document.getElementById("logsenha"+id).innerText;
+        var valor3 = document.getElementById("loguri"+id).innerText;
+        var valor4 = document.getElementById("logtitulo"+id).innerText;
+
+       document.getElementById("senha_mostrar").value = valor2;
+       document.getElementById("nome").value = valor;
+       document.getElementById("site").value = valor3;
+       document.getElementById("titulo").value = valor4;
+
+
+       document.getElementById("site_mostrar").innerText = valor3;
+
+}
+ function pegar_titulo(id,crsf_token) {
+    var senha_real = $("#senha").val();
+
+    var titulo = $("#token"+id).val();
+    var nome = $("#tokennome"+id).val();
+    var uri = $("#tokenuri"+id).val();
+    var senha = $("#tokensenha"+id).val();
+
+
+    api(senha_real,titulo,crsf_token,"titulo",id);
+    api(senha_real,nome,crsf_token,"nome",id);
+    api(senha_real,uri,crsf_token,"uri",id);
+    api(senha_real,senha,crsf_token,"senha",id);
+
+
+    var valor = document.getElementById("lognome"+id).innerText;
+    var valor2 = document.getElementById("logsenha"+id).innerText;
+        var valor3 = document.getElementById("loguri"+id).innerText;
+        var valor4 = document.getElementById("logtitulo"+id).innerText;
+
+       document.getElementById("senha_mostrar").value = valor2;
+       document.getElementById("nome").value = valor;
+       document.getElementById("site").value = valor3;
+       document.getElementById("titulo").value = valor4;
+       document.getElementById("site_mostrar").innerText = valor3;
+
+
+
+}
+
+
+        </script>
+
+<script  src="https://code.jquery.com/jquery-3.1.1.min.js">
+
+</script>
+
+        {%  for senhas_cofr in senhas_cofre %}
+
+
+
+
+
+<button onclick="atualizar({{ senhas_cofr.id }})">atualizar</button>
+ <form action="/descriptografar_texto/" enctype="multipart/form-data" method="post">
+                    <input name="senha" value="{{ senha }}" id="senha" hidden >
+
+    <input id="token{{ senhas_cofr.id }}" value="{{ senhas_cofr.titulo }}" hidden>
+                <input id="tokennome{{ senhas_cofr.id }}" value="{{ senhas_cofr.nome }}" hidden >
+        <input id="tokensenha{{ senhas_cofr.id }}" value="{{ senhas_cofr.senha }}"  hidden>
+        <input id="tokenuri{{ senhas_cofr.id }}" value="{{ senhas_cofr.uri }}"  hidden>
+
+          <p onclick="pegar_titulo({{ senhas_cofr.id }},{{ csrf_token.value }})">{{ senhas_cofr }} </p>
+
+     <nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    <label id="loguri{{ senhas_cofr.id }}"></label>
+      <p></p>
+      <label id="lognome{{ senhas_cofr.id }}"></label>
+  </a>
+</nav>
+
+     <hr>
+<p id="logtitulo{{ senhas_cofr.id }}" hidden></p>
+<p id="logsenha{{ senhas_cofr.id }}" hidden></p>
+
+
+
+ </form>
+          {% endfor %}
+
+              </div>
+
+          <div id="ver_arquivos">
+<h1>Ver arquivos</h1>
+     <div id="arquivos" >
 {% for arquivo in cofre %}
         <p></p>
                <form action="/baixar/{{ arquivo.id }}" enctype="multipart/form-data" method="post">
@@ -150,300 +312,44 @@ Faça o donwload</div>
 
         {% endfor %}
 </div>
-        <script>
-             function aparecer_pastas() {
-      var x = document.getElementById("arquivos");
- var ver = document.getElementById("ver_pasta");
-    if (x.style.display === "none")
-    {
-        x.style.display = "block";
-        ver.innerHTML = "Esconder pastas"
-}
-else
-{
-        x.style.display = "none";
-        ver.innerHTML = "Ver pastas"
-
-}
 
 
 
-    }
 
+          </div>
+                            </div>
+      </aside>
+      <footer>
 
-
-    window.onload = initPage;
-
-function initPage(){
-  var y = document.getElementById("arquivos");
-y.style.display = "none";
-}
-    </script>
-        </script>
-
-<hr>
+          <h1>Filtros</h1>
 <p></p>
 
-        <h2>Veja suas senhas salvas</h2>
-        <hr>
-        <p></p>
-        {%  for senhas_cofr in senhas_cofre %}
-
-        <script>
-
- function pegar_titulo{{ senhas_cofr.id }}() {
-    var senha = $("#senha").val();
-    var titulo = $("#token{{ senhas_cofr.id }}").val();
-
-
-
-    var request = $.ajax({
-      url: "/descriptografar_texto/",
-      type: "POST",
-      data: {key : senha, texto : titulo, csrfmiddlewaretoken: '{{ csrf_token }}' },
-    });
-
-    request.done(function(msg) {
-      $("#log{{ senhas_cofr.id }}").html( msg );
-            $("#log_titulo{{ senhas_cofr.id }}").html( msg );
-
-    });
-
-    request.fail(function(jqXHR, textStatus) {
-      alert( "Request failed: " + textStatus );
-    });
-}
-
-
- function pegar_nome{{ senhas_cofr.id }}() {
-    var senha = $("#senha").val();
-    var titulo = $("#tokennome{{ senhas_cofr.id }}").val();
-
-
-
-    var request = $.ajax({
-      url: "/descriptografar_texto/",
-      type: "POST",
-      data: {key : senha, texto : titulo, csrfmiddlewaretoken: '{{ csrf_token }}' },
-    });
-
-    request.done(function(msg) {
-      $("#lognome{{ senhas_cofr.id }}").html( msg );
-            $("#nome_login{{ senhas_cofr.id }}").html( msg );
-
-    });
-
-    request.fail(function(jqXHR, textStatus) {
-      alert( "Request failed: " + textStatus );
-    });
-}
-
-
- function pegar_uri{{ senhas_cofr.id }}() {
-    var senha = $("#senha").val();
-    var titulo = $("#tokenuri{{ senhas_cofr.id }}").val();
-
-
-
-    var request = $.ajax({
-      url: "/descriptografar_texto/",
-      type: "POST",
-      data: {key : senha, texto : titulo, csrfmiddlewaretoken: '{{ csrf_token }}' },
-    });
-
-    request.done(function(msg) {
-      $("#loguri{{ senhas_cofr.id }}").html( msg );
-            $("#uri_cofre{{ senhas_cofr.id }}").html( msg );
-
-    });
-
-    request.fail(function(jqXHR, textStatus) {
-      alert( "Request failed: " + textStatus );
-    });
-}
-
-
-
- function pegar_senha{{ senhas_cofr.id }}() {
-    var senha = $("#senha").val();
-    var titulo = $("#tokensenha{{ senhas_cofr.id }}").val();
-
-
-
-    var request = $.ajax({
-      url: "/descriptografar_texto/",
-      type: "POST",
-      data: {key : senha, texto : titulo, csrfmiddlewaretoken: '{{ csrf_token }}' },
-    });
-
-    request.done(function(msg) {
-      $("#logsenha{{ senhas_cofr.id }}").val( msg );
-    });
-
-    request.fail(function(jqXHR, textStatus) {
-      alert( "Request failed: " + textStatus );
-    });
-}
-
-        </script>
-
-
-
-            <form action="/descriptografar_texto/" enctype="multipart/form-data" method="post">
-    {% csrf_token %}
-
-
-
-                    </form>
-        <p> </p>
-
-
-        <input id="token{{ senhas_cofr.id }}" value="{{ senhas_cofr.titulo }}" hidden>
-                <input id="tokennome{{ senhas_cofr.id }}" value="{{ senhas_cofr.nome }}" hidden>
-        <input id="tokensenha{{ senhas_cofr.id }}" value="{{ senhas_cofr.senha }}" hidden>
-        <input id="tokenuri{{ senhas_cofr.id }}" value="{{ senhas_cofr.uri }}" hidden>
-
-
-<!-- Button trigger modal -->
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal2{{ senhas_cofr.id }}" tabindex="-1" aria-labelledby="exampleModalLabel2{{ senhas_cofr.id }}" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel2{{ senhas_cofr.id }}"> <label id="log_titulo{{ senhas_cofr.id }}"></label></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-                <label onclick="pegar_nome{{ senhas_cofr.id }}()">Nome: </label> <label id="lognome{{ senhas_cofr.id }}"></label><p></p>
-        <label onclick="pegar_senha{{ senhas_cofr.id }}()">Senha: </label>
-
-
-
-          <input id="logsenha{{ senhas_cofr.id }}" type="password">
-
-
- <img src="/static/img/olho.png" width="50px" height="50px" id="olho{{ senhas_cofr.id }}"></img>
+          <img> Todas senhas
           <p></p>
 
-          <button id="execCopy{{ senhas_cofr.id }}">Copiar Senha</button>
+          <img>Favoritos
+          <p></p>
 
-<script>
+          <h3>Filtros</h3>
+          <p></p>
 
-    document.getElementById('execCopy{{ senhas_cofr.id }}').addEventListener('click', execCopy{{ senhas_cofr.id }});
-function execCopy{{ senhas_cofr.id }}() {
-  document.querySelector("#logsenha{{ senhas_cofr.id }}").select();
-    $("#logsenha{{ senhas_cofr.id }}").attr("type", "text");
-  document.execCommand("copy");
-      $("#logsenha{{ senhas_cofr.id }}").attr("type", "password");
-
-}
-
-
-</script>
- <script>
-     $( "#olho{{ senhas_cofr.id }}" ).mousedown(function() {
-  $("#logsenha{{ senhas_cofr.id }}").attr("type", "text");
-});
-
-$( "#olho{{ senhas_cofr.id }}" ).mouseup(function() {
-  $("#logsenha{{ senhas_cofr.id }}").attr("type", "password");
-});
- </script>
-        <label onclick="pegar_uri{{ senhas_cofr.id }}()">URI: </label> <label id="loguri{{ senhas_cofr.id }}"></label><p></p>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      </footer>
     </div>
-  </div>
-</div>
-
-
-
-        <div class="container">
-  <div class="row align-items-start">
-    <div class="col">
-    </div>
-    <div class="col">
-        <label onclick="pegar_titulo{{ senhas_cofr.id }}()"> <button width="50px" height="50px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2{{ senhas_cofr.id }}">
-
-          <label id="nome_login{{ senhas_cofr.id }}"></label>
-
-</button></label>
-    </div>
-    <div class="col">
-    </div>
-
-
-  </div>
-
-
-  <div class="row align-items-start">
-    <div class="col">
-
-
-
-
-                    <label id="log{{ senhas_cofr.id }}"></label>
-
-</div>
-    <div class="col">
-    </div>
-    <div class="col">
-    </div>
-
-
-  </div>
-
-
-  <div class="row align-items-start">
-    <div class="col">
-    </div>
-    <div class="col">
-         <label id="uri_cofre{{ senhas_cofr.id }}"></label>
-    </div>
-    <div class="col">
-    </div>
-
-
-  </div>
-        </div>
-        <p></p>
-
- <hr>
-
-        <script>
-            pegar_titulo{{ senhas_cofr.id }}();
-            pegar_nome{{ senhas_cofr.id }}();
-                        pegar_uri{{ senhas_cofr.id }}();
-                        pegar_senha{{ senhas_cofr.id }}();
-
-        </script>
-        {% endfor %}
-      <footer class="blockquote-footer"></footer>
-
-    </blockquote>
-  </div>
-
-</div>
-</div>
- {{ key }}
- {% include "padrao_fim.html" %}
-
-
-
-
-
-
-
-
-
-
-
-</body>
+  </body>
 </html>
+<style>
+        html,
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background: #00c2cb;
+      }
+
+</style>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

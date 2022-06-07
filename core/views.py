@@ -127,37 +127,39 @@ def hash_chave(key):
 
 @login_required(login_url='/login/')
 def inicio_submit(request):
-    senha = request.POST.get('senha')
+        senha = request.POST.get('senha')
 
-    #formato do fernet de senha
-    key = str(senha)
+        #formato do fernet de senha
+        key = str(senha)
 
-    if len(key) < 44:
-        key = key + "a" * (43 - len(key)) + "="
+        if len(key) < 44:
+            key = key + "a" * (43 - len(key)) + "="
 
-    key = key[0:44]
+        key = key[0:44]
 
-    #hash da senha
+        #hash da senha
+        try:
+            cofre = Hash_Senha_Cofre.objects.get(
+                                            usuario= request.user)
+            hash_texto_chave = hash_chave(key)
+            if (cofre.hash == hash_texto_chave):
 
-    try:
-        cofre = Hash_Senha_Cofre.objects.get(
-                                        usuario= request.user)
-        hash_texto_chave = hash_chave(key)
-        if (cofre.hash == hash_texto_chave):
-            return render(request, 'cofre.html',{'senha':key,'cofre':Arquivo.objects.filter(hash__usuario=request.user),
-                                                 'senhas_cofre': Senha_Criptografada.objects.filter(usuario=request.user)})
+                try:
+                    return render(request, 'cofre.html',{'senha':key,'cofre':Arquivo.objects.filter(hash__usuario=request.user),
 
+                                                     'senhas_cofre': Senha_Criptografada.objects.filter(usuario=request.user)})
 
+                except:
+                    return HttpResponse("LAYOUT BUGOU")
 
-        return HttpResponse("senha errada")
-
-    except:
-        hash_texto_chave = hash_chave(key)
-        Hash_Senha_Cofre.objects.create(hash=hash_texto_chave,
-                                        usuario=request.user)
-    dados = {"key":senha}
-    print(key)
-    return render(request,'exibir_senha.html',dados)
+            return HttpResponse("senha errada")
+        except:
+            hash_texto_chave = hash_chave(key)
+            Hash_Senha_Cofre.objects.create(hash=hash_texto_chave,
+                                            usuario=request.user)
+            dados = {"key":senha}
+            print(key)
+            return render(request,'exibir_senha.html',dados)
 
 
 def decripitar(key,local="safasfsa.zip"):
@@ -296,7 +298,8 @@ def criptografar_texto_submit(request):
                                        uri=uri_criptografado,
                                        usuario=request.user)
     dados = {'key':senha}
-    return render(request,'exibir_senha.html',dados)
+    return redirect('/inicio')
+    #return render(request,'exibir_senha.html',dados)
 
 
 @login_required(login_url='/login/')

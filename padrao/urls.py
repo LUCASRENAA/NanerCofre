@@ -26,8 +26,8 @@ urlpatterns = [
 
                   path('registro/submit', views.submit_registro),
 
-                  path('inicio/',views.inicio),
                   path('upload/', views.subir_arquivo),
+                  path('inicio/', views.inicio),
 
                   path('inicio/submit', views.inicio_submit),
                   path('baixar/<id>', views.descer_arquivo_path),

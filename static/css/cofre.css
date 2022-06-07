@@ -1,0 +1,75 @@
+.container {
+    display: grid;
+    grid-template: 10vh 80vh 10vh/0.25fr 1fr 1fr;
+    grid-template-areas:
+        "h a c"
+        "m a c"
+        "f a c"
+      }
+
+#logo_texto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#img_logo {
+left:0px;
+}
+
+
+
+header {
+    height: 100%;
+    grid-area: h;
+    grid-column-start: 1;
+    grid-column-end:1;
+        background: #fff;
+
+      }
+
+      main {
+
+        height: 100%;
+        background: #dcdcdc;
+
+        grid-area: m;
+      }
+
+      aside {
+        height: 100%;
+        background: #c0c0c0;
+
+        grid-area: a;
+      }
+
+       cachorro {
+        height: 100%;
+        grid-area: c;
+        background: #f0f0f0;
+
+      }
+
+      footer {
+        height: 100%;
+        background: #fff;
+
+        grid-area: f;
+
+
+      }
+
+#site
+{
+
+}
+
+
+:root{
+    --input-linear: linear-gradient(120deg, #000000, #00c2cb);
+    --button-linear: linear-gradient(120deg, #000000, #51e8f1,#FF92BFFF);
+    --border-height: 1px;
+    --input-error: rgb(18,151,107);
+    --button-disabled: #000000 ;
+    --button-success: rgb(18,151,107);
+}
