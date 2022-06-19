@@ -1,0 +1,8 @@
+env/
+.idea/
+mydatabase
+venv/
+venv2/
+db.sqlite3
+db (cópia 1).sqlite3
+salvar_Arquivos/*

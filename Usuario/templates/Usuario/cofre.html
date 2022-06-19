@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Cofre</title>
+<link rel="stylesheet" type="text/css" href="/static/css/cofre.css">
+
+    <style>
+
+
+    </style>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="container">
+      <header>
+       <nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/static/img/Luner.svg"  class="d-inline-block align-top form-control" alt="">
+
+  </a>
+</nav>
+          </header>
+      <main>
+          <h1>Tipos</h1>
+<p></p>
+          <img>Senhas
+          <p></p>
+
+          <img>Arquivos
+<p></p>
+
+          <script src="/static/js/cofre.js"></script>
+
+
+
+          <button onclick="aparecer_senhas()">Visualizar Senhas</button>
+          <p></p>
+
+
+          <button onclick="aparecer_pastas()">Visualizar Arquivos</button>
+<!-- Button trigger modal -->
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+Salvar senhas
+</button>
+
+
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
+Salvar Arquivos
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Coloque arquivos no servidor ou salve senhas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+ <form action="/criptografar_texto/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+
+<h2>Subir senha criptografada</h2><p></p>
+                    <input name="senha" value="{{ senha }}" hidden>
+                        <label>Titulo</label>      <p></p>      <input name="titulo" class="form-control">
+              <p></p>
+                 <label>Nome</label><p></p>     <input name="nome" class="form-control"> <p></p>
+                    <label>Senha</label> <p></p>     <input type="password" name="senha_texto" class="form-control"> <p></p>
+                     <label>URI</label> <p></p>     <input name="uri" class="form-control"><p></p>
+
+<button class="btn btn-primary form-control" type="/criptografar_texto/">Enviar Texto</button>
+                    </form>
+
+        <hr>
+
+
+      <div class="modal-footer">
+
+      </div>
+
+  </div>
+</div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Coloque arquivos no servidor ou salve senhas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <blockquote class="blockquote mb-0">
+<form action="/upload/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <blockquote class="blockquote mb-0">
+<label>Subir arquivo</label>
+        <input name="file" type="file" class="form-control">
+
+        <p></p>
+
+        <input name="senha" value="{{ senha }}" hidden>
+
+    </blockquote>
+        <input type="submit"  class="btn btn-primary form-control" value="Subir arquivo">
+
+          </form>
+
+
+
+      <div class="modal-footer">
+
+      </div>
+          </blockquote>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+      </main>
+      <cachorro>
+                            <div class="container-fluid quem-somos text-center margin">
+
+          Site:
+                                <p></p>
+      <img src="/static/img/pasta.jpg" class="rounded">
+                                <input id="site"  class="form-control" hidden>
+                                <p></p>
+                                <label id="site_mostrar"></label>
+
+
+<form action="/criptografar_texto/" enctype="multipart/form-data" method="post">
+                                    <input id="id" name="id">
+
+    {% csrf_token %}
+<p id="uri"></p>
+  <input name="uri" class="form-control" id="mostrar_uri">
+  <input name="editar" value="1" class="form-control"  hidden>
+
+                                <fieldset>
+                         <div class="form-group">
+    <label for="titulo">Titulo</label>
+    <input type="text" class="form-control" id="titulo" name="titulo">
+  </div>
+               <div class="form-group">
+    <label for="nome">Email/Username</label>
+    <input type="text" class="form-control" id="nome" name="nome">
+  </div>
+
+                                               <div class="form-group">
+    <label for="senha_mostrar">Senha</label>
+    <input type="password" class="form-control" id="senha_mostrar"  name="senha_texto" >
+  </div>
+
+
+</fieldset>
+           <input name="senha" value="{{ senha }}" hidden>
+
+          <p></p>
+
+<button>Editar</button>
+                        </form>
+
+
+
+                                      <form action="/criptografar_texto/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+<input id="deletar" name="deletar" hidden><input name="deletar2" value="1" hidden>
+          <button>Excluir</button>
+                                      </form>
+                            </div>
+
+      </cachorro>
+
+      <aside>
+                            <div class="container-fluid quem-somos text-center margin">
+
+      <input class="form-control mr-sm-2"  type="search" placeholder="Procurar" aria-label="Search">
+<p></p>
+          <div id="ver_senhas">
+            <h2>Veja suas senhas salvas</h2>
+        <hr>
+        <p></p>
+                  <script>
+
+function api(senha,titulo,crsf_token,variavel,id){
+
+    var request = $.ajax({
+      url: "/descriptografar_texto/",
+      type: "POST",
+      data: {key : senha, texto : titulo, csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
+
+    request.done(function(msg) {
+      $("#log"+variavel+id).html( msg );
+            $("#log"+variavel+id).html( msg );
+
+    });
+
+    request.fail(function(jqXHR, textStatus) {
+      alert( "Request failed: " + textStatus );
+    });
+}
+
+function ContarSegundos(){
+    var segundos = 10;
+}
+
+ function atualizar(id) {
+
+     var valor = document.getElementById("lognome"+id).innerText;
+    var valor2 = document.getElementById("logsenha"+id).innerText;
+        var valor3 = document.getElementById("loguri"+id).innerText;
+        var valor4 = document.getElementById("logtitulo"+id).innerText;
+
+       document.getElementById("senha_mostrar").value = valor2;
+
+       document.getElementById("nome").value = valor;
+       document.getElementById("site").value = valor3;
+       document.getElementById("titulo").value = valor4;
+
+
+       document.getElementById("site_mostrar").innerText = valor3;
+
+}
+ function pegar_titulo(id,crsf_token) {
+    var senha_real = $("#senha").val();
+
+    var titulo = $("#token"+id).val();
+    var nome = $("#tokennome"+id).val();
+    var uri = $("#tokenuri"+id).val();
+    var senha = $("#tokensenha"+id).val();
+
+
+    api(senha_real,titulo,crsf_token,"titulo",id);
+    api(senha_real,nome,crsf_token,"nome",id);
+    api(senha_real,uri,crsf_token,"uri",id);
+    api(senha_real,senha,crsf_token,"senha",id);
+
+
+    var valor = document.getElementById("lognome"+id).innerText;
+    var valor2 = document.getElementById("logsenha"+id).innerText;
+        var valor3 = document.getElementById("loguri"+id).innerText;
+        var valor4 = document.getElementById("logtitulo"+id).innerText;
+
+       document.getElementById("senha_mostrar").value = valor2;
+       document.getElementById("nome").value = valor;
+       document.getElementById("site").value = valor3;
+       document.getElementById("titulo").value = valor4;
+       document.getElementById("site_mostrar").innerText = valor3;
+       document.getElementById("id").value = id;
+       document.getElementById("deletar").value = id;
+              document.getElementById("mostrar_uri").value = valor3;
+              document.getElementById("mostrar_id").value = id;
+
+
+
+}
+
+
+        </script>
+
+<script  src="https://code.jquery.com/jquery-3.1.1.min.js">
+
+</script>
+
+        {%  for senhas_cofr in senhas_cofre %}
+
+
+
+
+
+<button onclick="atualizar({{ senhas_cofr.id }})">atualizar</button>
+ <form action="/descriptografar_texto/" enctype="multipart/form-data" method="post">
+                    <input name="senha" value="{{ senha }}" id="senha" hidden >
+
+    <input id="token{{ senhas_cofr.id }}" value="{{ senhas_cofr.titulo }}" hidden>
+                <input id="tokennome{{ senhas_cofr.id }}" value="{{ senhas_cofr.nome }}" hidden >
+        <input id="tokensenha{{ senhas_cofr.id }}" value="{{ senhas_cofr.senha }}"  hidden>
+        <input id="tokenuri{{ senhas_cofr.id }}" value="{{ senhas_cofr.uri }}"  hidden>
+
+          <p onclick="pegar_titulo({{ senhas_cofr.id }},{{ csrf_token.value }})">{{ senhas_cofr }} </p>
+
+     <nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    <label id="loguri{{ senhas_cofr.id }}"></label>
+      <p></p>
+      <label id="lognome{{ senhas_cofr.id }}"></label>
+  </a>
+</nav>
+
+     <hr>
+<p id="logtitulo{{ senhas_cofr.id }}" hidden></p>
+<p id="logsenha{{ senhas_cofr.id }}" hidden></p>
+
+
+
+ </form>
+          {% endfor %}
+
+              </div>
+
+          <div id="ver_arquivos">
+<h1>Ver arquivos</h1>
+     <div id="arquivos" >
+{% for arquivo in cofre %}
+        <p></p>
+               <form action="/baixar/{{ arquivo.id }}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+
+
+                    <input name="senha" value="{{ senha }}" hidden>
+                    <input name="id" value="{{ arquivo.id }}" hidden>
+<button type="/baixar/{{ arquivo.id }}"><img src="/static/img/upload.jpg" width="50px" height="50px"></button>
+        {{ arquivo.nome }}
+                    </form>
+
+
+
+        {% endfor %}
+</div>
+
+
+
+
+          </div>
+                            </div>
+      </aside>
+      <footer>
+
+
+      </footer>
+    </div>
+  </body>
+</html>
+<style>
+        html,
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background: #00c2cb;
+      }
+
+
+.container {
+    display: grid;
+    grid-template: 10vh 80vh 10vh/0.25fr 1fr 1fr;
+    grid-template-areas:
+        "h a c"
+        "m a c"
+        "f a c"
+      }
+
+#logo_texto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#img_logo {
+left:0px;
+}
+
+
+
+header {
+    height: 100%;
+    grid-area: h;
+    grid-column-start: 1;
+    grid-column-end:1;
+        background: #fff;
+
+      }
+
+      main {
+
+        height: 100%;
+        background: #dcdcdc;
+
+        grid-area: m;
+      }
+
+      aside {
+        height: 100%;
+        background: #c0c0c0;
+
+        grid-area: a;
+      }
+
+       cachorro {
+        height: 100%;
+        grid-area: c;
+        background: #f0f0f0;
+
+      }
+
+      footer {
+        height: 100%;
+        background: #fff;
+
+        grid-area: f;
+
+
+      }
+
+#site
+{
+
+}
+
+
+:root{
+    --input-linear: linear-gradient(120deg, #000000, #00c2cb);
+    --button-linear: linear-gradient(120deg, #000000, #51e8f1,#FF92BFFF);
+    --border-height: 1px;
+    --input-error: rgb(18,151,107);
+    --button-disabled: #000000 ;
+    --button-success: rgb(18,151,107);
+}
+</style>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
