@@ -36,7 +36,48 @@
           <script src="/static/js/cofre.js"></script>
 
 
+<script>
+                 function aparecer_pastas() {
+      var x = document.getElementById("ver_arquivos");
+    if (x.style.display === "none")
+    {
+        x.style.display = "block";
+}
+else
+{
+        x.style.display = "none";
 
+}
+
+
+
+    }
+
+
+       function aparecer_senhas() {
+      var x = document.getElementById("ver_senhas");
+
+    if (x.style.display === "none")
+    {
+        x.style.display = "block";
+}
+else
+{
+        x.style.display = "none";
+
+}
+
+
+
+    }
+
+    window.onload = initPage;
+
+function initPage(){
+  var y = document.getElementById("ver_arquivos");
+y.style.display = "none";
+}
+</script>
           <button onclick="aparecer_senhas()">Visualizar Senhas</button>
           <p></p>
 
@@ -51,6 +92,10 @@ Salvar senhas
 
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
 Salvar Arquivos
+</button>
+
+           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal3">
+Gerar Senhas
 </button>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -129,22 +174,68 @@ Salvar Arquivos
 
 </div>
 
+
+
+
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel3">Gerador de senhas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <blockquote class="blockquote mb-0">
+<div class="input-box">
+
+    <h2>Gerador de senhas randomicas</h2>
+    <input type="text" placeholder="Gerar senha" id="password" readonly=""> <input type="number" id="tamanhoDaSenha" value="16">
+    <div id="btn" onclick="getPassword()"><button>Gerar senha</button></div>
+  </div>
+<script>
+    function getPassword() {
+      var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@#$%^&*()+?><:{}[]";
+      var passwordLength =       document.getElementById('tamanhoDaSenha').value;
+      var password = "";
+
+      for (var i = 0; i < passwordLength; i++) {
+        var randomNumber = Math.floor(Math.random() * chars.length);
+        password += chars.substring(randomNumber, randomNumber + 1);
+      }
+      document.getElementById('password').value = password
+    }
+</script>
+      <div class="modal-footer">
+
+      </div>
+          </blockquote>
+
+    </div>
+  </div>
+</div>
+
+</div>
       </main>
       <cachorro>
                             <div class="container-fluid quem-somos text-center margin">
 
           Site:
                                 <p></p>
-      <img src="/static/img/pasta.jpg" class="rounded">
+      <img src="/static/img/image.png" height="220" width="250" class="rounded">
                                 <input id="site"  class="form-control" hidden>
                                 <p></p>
                                 <label id="site_mostrar"></label>
 
 
 <form action="/criptografar_texto/" enctype="multipart/form-data" method="post">
-                                    <input id="id" name="id">
+                        <input name="senha" value="{{ senha }}" hidden >
+
+                                    <input id="id" name="id" >
 
     {% csrf_token %}
+    <label>Site</label>
 <p id="uri"></p>
   <input name="uri" class="form-control" id="mostrar_uri">
   <input name="editar" value="1" class="form-control"  hidden>
@@ -177,7 +268,7 @@ Salvar Arquivos
 
                                       <form action="/criptografar_texto/" enctype="multipart/form-data" method="post">
     {% csrf_token %}
-<input id="deletar" name="deletar" hidden><input name="deletar2" value="1" hidden>
+<input id="deletar" name="deletar" hidden ><input name="deletar2" value="1"  hidden>
           <button>Excluir</button>
                                       </form>
                             </div>
@@ -185,7 +276,8 @@ Salvar Arquivos
       </cachorro>
 
       <aside>
-                            <div class="container-fluid quem-somos text-center margin">
+               <div class="card example-1 scrollbar-ripe-malinka">
+                  <div class="container-fluid quem-somos text-center margin">
 
       <input class="form-control mr-sm-2"  type="search" placeholder="Procurar" aria-label="Search">
 <p></p>
@@ -231,7 +323,11 @@ function ContarSegundos(){
        document.getElementById("site").value = valor3;
        document.getElementById("titulo").value = valor4;
 
+       document.getElementById("mostrar_uri").value  = valor3;
+  document.getElementById("deletar").value = id;
+    document.getElementById("id").value = id;
 
+              document.getElementById("deletar2").value = id;
        document.getElementById("site_mostrar").innerText = valor3;
 
 }
@@ -262,6 +358,8 @@ function ContarSegundos(){
        document.getElementById("site_mostrar").innerText = valor3;
        document.getElementById("id").value = id;
        document.getElementById("deletar").value = id;
+              document.getElementById("deletar2").value = id;
+
               document.getElementById("mostrar_uri").value = valor3;
               document.getElementById("mostrar_id").value = id;
 
@@ -280,10 +378,9 @@ function ContarSegundos(){
 
 
 
+<button onclick="atualizar({{ senhas_cofr.id }})">Atualizar</button>
 
-
-<button onclick="atualizar({{ senhas_cofr.id }})">atualizar</button>
- <form action="/descriptografar_texto/" enctype="multipart/form-data" method="post">
+ <form action="/descriptografar_texto/" enctype="multipart/form-data" method="post">{% csrf_token %}
                     <input name="senha" value="{{ senha }}" id="senha" hidden >
 
     <input id="token{{ senhas_cofr.id }}" value="{{ senhas_cofr.titulo }}" hidden>
@@ -291,11 +388,16 @@ function ContarSegundos(){
         <input id="tokensenha{{ senhas_cofr.id }}" value="{{ senhas_cofr.senha }}"  hidden>
         <input id="tokenuri{{ senhas_cofr.id }}" value="{{ senhas_cofr.uri }}"  hidden>
 
-          <p onclick="pegar_titulo({{ senhas_cofr.id }},{{ csrf_token.value }})">{{ senhas_cofr }} </p>
+         <p id="paragrafo{{ senhas_cofr.id }}"onclick="pegar_titulo({{ senhas_cofr.id }},{{ csrf_token.value }})" hidden>Atualizar </p>
 
+     <script>
+      var x = document.getElementById("paragrafo{{ senhas_cofr.id }}").click();
+
+
+     </script>
      <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
-    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    <img src="/static/img/image.png" width="30" height="30" class="d-inline-block align-top" alt="">
     <label id="loguri{{ senhas_cofr.id }}"></label>
       <p></p>
       <label id="lognome{{ senhas_cofr.id }}"></label>
@@ -338,6 +440,7 @@ function ContarSegundos(){
 
           </div>
                             </div>
+              </div>
       </aside>
       <footer>
 
@@ -430,6 +533,12 @@ header {
     --input-error: rgb(18,151,107);
     --button-disabled: #000000 ;
     --button-success: rgb(18,151,107);
+}
+
+.example-1 {
+    position: relative;
+    overflow-y: scroll;
+    height: 100%;
 }
 </style>
 

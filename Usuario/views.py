@@ -338,6 +338,8 @@ def criptografar_texto_submit(request):
             id = request.POST.get('deletar')
 
             if int(id2) == 1:
+
+
                     if SenhaCriptografada.objects.get(id=id).usuario == request.user:
                         SenhaCriptografada.objects.get(id=id).delete()
                     return redirect('/inicio')
@@ -346,11 +348,10 @@ def criptografar_texto_submit(request):
 
     id = request.POST.get('id')
     if request.POST:
-
+        teste = request.POST.get('senha')
         senha = str(request.POST.get('senha').replace("b'","").replace("'","")).encode(encoding='utf-8')
 
-
-
+        id = request.POST.get('id')
 
         texto = request.POST.get('texto')
         titulo = request.POST.get('titulo')
@@ -368,27 +369,30 @@ def criptografar_texto_submit(request):
         senha_texto_criptografado  = criptografar_texto(senha,senha_texto)
         uri_criptografado  = criptografar_texto(senha,uri)
 
-        if visualizar_senha != "":
-            try:
-                if int(editar) == int(1):
-                    pegar = SenhaCriptografada.objects.get(id=id)
-                    pegar.titulo= titulo_criptografado
-                    pegar.nome = nome_criptografado
-                    pegar.uri = uri_criptografado
-                    pegar.save()
+        print(editar)
+        try:
+            if int(editar) == int(1):
+                        pegar = SenhaCriptografada.objects.get(id=id)
+                        pegar.titulo= titulo_criptografado
+                        pegar.nome = nome_criptografado
+                        pegar.uri = uri_criptografado
+                        pegar.save()
+        except:
+            dados = {'titulo': titulo_criptografado,
+                     "nome": nome_criptografado,
+                     "senha": senha_texto_criptografado,
+                     "uri": uri_criptografado}
+            SenhaCriptografada.objects.create(titulo=titulo_criptografado,
+                                              nome=nome_criptografado,
+                                              senha=senha_texto_criptografado,
+                                              uri=uri_criptografado,
+                                              usuario=request.user)
 
-            except:
-                    SenhaCriptografada.objects.create(titulo=titulo_criptografado,
-                                                       nome=nome_criptografado,
-                                                       senha=senha_texto_criptografado,
-                                                       uri=uri_criptografado,
-                                                       usuario=request.user)
+            return redirect('/inicio')
+
+
         return redirect('/inicio')
-        dados = {'titulo':titulo_criptografado,
-                 "nome":nome_criptografado,
-                 "senha":senha_texto_criptografado,
-                 "uri": uri_criptografado}
-        return HttpResponse(dados)
+
 
 
 

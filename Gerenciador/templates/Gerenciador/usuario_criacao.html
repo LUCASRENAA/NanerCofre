@@ -46,7 +46,7 @@
   ,'{{ mes.mes }}'
     {% endfor %}],
  ['{{ ano }}' {% for mes in senhas %}
-  ,'{{ mes.senhas |length }}'
+  ,{{ mes.senhas |length }}
     {% endfor %}],
         ]);
 
@@ -185,7 +185,19 @@
 
 
             </ul>
+ <script type="text/javascript">
+    function mostraAlerta(elemento)
+    {
+      window.location.href = elemento.value;
+    }
+</script>
+<select class="form-select" aria-label="Default select example" onchange="javascript:mostraAlerta(this);">
+  <option selected>Escolha o ano do relatorio ({{ ano }})</option>
+{% for ano_lista in anos %}
+      <option value="{{ ano_lista}}">{{ ano_lista}}</option>
 
+    {% endfor%}
+</select>
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>Saved reports</span>
               <a class="d-flex align-items-center text-muted" href="#">
@@ -194,9 +206,18 @@
             </h6>
             <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/gerenciador/usuario/{{ ano }}">
                   <span data-feather="file-text"></span>
-                  Usuario
+                  Senhas modificadas no chaveiro
+                </a>
+
+              </li>
+            </ul>
+                   <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="/gerenciador/usuario_criado/{{ ano }}">
+                  <span data-feather="file-text"></span>
+                  Senhas criadas no chaveiro
                 </a>
 
               </li>
@@ -204,7 +225,7 @@
 
                 <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/gerenciador/criado/{{ ano }}/{{ mes }}/{{ dia }}/2">
                   <span data-feather="file-text"></span>
                    Contas Criados no mês
                 </a>
@@ -214,9 +235,9 @@
 
                 <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/gerenciador/usuario_sem_senhas/">
                   <span data-feather="file-text"></span>
-                  Qualquer coisa
+                  Usuários sem senhas
                 </a>
 
               </li>

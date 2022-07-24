@@ -1,10 +1,5 @@
 
 
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,33 +30,7 @@
 
 
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Ano' {% for mes in senhas %}
-  ,'{{ mes.mes }}'
-    {% endfor %}],
- ['{{ ano }}' {% for mes in senhas %}
-  ,{{ mes.senhas |length }}
-    {% endfor %}],
-        ]);
-
-        var options = {
-          chart: {
-
-            subtitle: '{{ subtitulo }}',
-          }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
-    </script>
 
 
 
@@ -185,19 +154,7 @@
 
 
             </ul>
-              <script type="text/javascript">
-    function mostraAlerta(elemento)
-    {
-      window.location.href = elemento.value;
-    }
-</script>
-<select class="form-select" aria-label="Default select example" onchange="javascript:mostraAlerta(this);">
-  <option selected>Escolha o ano do relatorio ({{ ano }})</option>
-{% for ano_lista in anos %}
-      <option value="{{ ano_lista}}">{{ ano_lista}}</option>
 
-    {% endfor%}
-</select>
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>Saved reports</span>
               <a class="d-flex align-items-center text-muted" href="#">
@@ -213,9 +170,7 @@
 
               </li>
             </ul>
-
-
-              <ul class="nav flex-column mb-2">
+                   <ul class="nav flex-column mb-2">
             <li class="nav-item">
                 <a class="nav-link" href="/gerenciador/usuario_criado/{{ ano }}">
                   <span data-feather="file-text"></span>
@@ -224,7 +179,6 @@
 
               </li>
             </ul>
-
 
                 <ul class="nav flex-column mb-2">
             <li class="nav-item">
@@ -240,7 +194,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/gerenciador/usuario_sem_senhas/">
                   <span data-feather="file-text"></span>
-                 Usuários sem senhas
+                  Usuários sem senhas
                 </a>
 
               </li>
@@ -249,50 +203,64 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-                  <h1>{{ titulo }}</h1>
+                  <h1>Escolha o dashborad</h1>
 
+               <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+<p></p>
 
+          </div>
      <div class="container">
          <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 
 
-    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
 <p></p>
 
-         <hr>
-         <h1>{{ texto_complementar }} {{ texto_embaixo }}</h1>
-         <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-              <th scope="col">Usuario</th>
 
-      <th scope="col">Data de criação</th>
-              <th scope="col">Data de modificação</th>
-
-    </tr>
-  </thead>
-  <tbody>
-  {% for modelo in senhas %}
-  {% for valor in modelo.senhas %}
-
-     <tr>
-
-      <td>{{ valor.id }}</td>
-      <td><a href="/gerenciador/usuario/{{ valor.usuario }}/{{ ano }}">{{ valor.usuario }}</a></td>
-
-      <td>{{ valor.created_date }}</td>
-      <td>{{ valor.modified_date }}</td>
-
-    </tr>
-         {% endfor %}
-         {% endfor %}
+         <h1>Escolha o ano</h1>
+<input type="number" value="{{ ano }}" id="ano">
 
 
-  </tbody>
-</table>
+         <a id="anochaveiro" href="/gerenciador/usuario/{{ ano }}">Chaveiro num ano</a>
+         <button onclick="myFunction()">Ver a quantidade de chaveiros dos usuários num ano</button>
 
+                 <button>Ver a quantidade de contas criadas no ano</button>
+
+
+
+    <script type="text/javascript">
+        function myFunction() {
+            ano =  document.getElementById('ano').value
+            document.getElementById('anochaveiro').href
+                ="/gerenciador/usuario/"+ano;
+
+            document.getElementById("anochaveiro")
+                .textContent = "Vá para o ano de: " + ano;
+        }
+    </script>
+                  <h1>Escolha o mes</h1>
+         <input type="number" value="{{ mes }}" id="mes">
+
+                           <h1>Escolha o dia certo</h1>
+                  <a id="diachaveiro" href="/gerenciador/usuario/{{ ano }}">Chaveiro num ano</a>
+
+         <input type="number" value="{{ dia }}" id="dia">
+                          <button onclick="myFunction3()">Veja</button>
+
+ <script type="text/javascript">
+        function myFunction3() {
+            ano =  document.getElementById('ano').value
+                        mes =  document.getElementById('mes').value
+            dia =  document.getElementById('dia').value
+
+
+            document.getElementById('diachaveiro').href
+                = "/gerenciador/criado/"+ano + "/" +mes+"/"+dia+"/3";
+
+            document.getElementById("diachaveiro")
+                .textContent = "/gerenciador/criado/"+ano + "/" +mes+"/"+dia+"/3";
+        }
+    </script>
 
       </div>
 
@@ -318,10 +286,66 @@
     </script>
 
     <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          datasets: [{
+            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
 
   </body>
 
 </html>
 <script>
 
+
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawMaterial);
+
+function drawMaterial() {
+      var data = google.visualization.arrayToDataTable([
+        ['{{ titulo }}', '{{ azul }}', '{{ vermelho }}'],
+        ['{{ titulo }}', {{ usuarios| length}}, {{ usuario_filtro| length}}],
+      ]);
+
+      var materialOptions = {
+        chart: {
+          title: '{{ texto_embaixo }} '
+        },
+        hAxis: {
+          title: 'Total Population',
+          minValue: 0,
+        },
+        vAxis: {
+          title: 'City'
+        },
+        bars: 'horizontal'
+      };
+      var materialChart = new google.charts.Bar(document.getElementById('chart_div'));
+      materialChart.draw(data, materialOptions);
+    }
 </script>
