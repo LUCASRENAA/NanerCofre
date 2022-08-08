@@ -6,8 +6,12 @@ Para armazenamento de arquivos e senhas seguras.
 
 Utilizando a biblioteca do Fernet para criptografar seus arquivos possibilitando que só o usuário com a chave mestra, acesse o arquivo.
 
+## Objetivos
+A aplicação Naner Cofre tem como objetivo armazenar senhas e arquivos de forma segura.
 
+## Artigo
 
+Está no link do Drive: https://drive.google.com/file/d/1RdB18Ai9pLVCiRCdOqVmxRI8QB_I1epG/view?usp=sharing
 
 
 # Requisitos
@@ -38,6 +42,16 @@ Utilizando a biblioteca do Fernet para criptografar seus arquivos possibilitando
 # Tela do cofre (Ainda em modificação)
 ![vuln2.jpg](imagens_readme/cofre.jpeg)
 
+
+## Demonstração
+A demonstração da ferramente será realizada através de um video ensinando a configurar o ambiente e o demonstrará O funcionamento da ferramenta será mostrado através da perspectiva do usuário e a outra do administrador e seguirá os seguintes passos (a) configurando o servidor, (b) armazenando senhas no servidor e (c) observando os gráficos e indicadores do sistema sobre a utilização do mesmo pelos usuários.
+
+
+```
+(a): https://drive.google.com/file/d/1gA3JS2y3r3SLsj3RdA1ufpa3Ry1QoaV7/view?usp=sharing
+(b): https://drive.google.com/file/d/1d74OCjOrUfFtd6pP7dzJPf2AqNrDBZg6/view?usp=sharing
+(c): https://drive.google.com/file/d/1FlpCdZx7wqoX7sLQp6GCAxm8WNbfLA70/view?usp=sharing
+```
 
 ## Como usar?
 
