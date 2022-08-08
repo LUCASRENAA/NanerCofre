@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.urls import include, path
 
+from NanerCofre import views
+
 urlpatterns = [
     path("Usuario/", include("Usuario.urls")),
     path("", include("Usuario.urls")),
     path("gerenciador/", include("Gerenciador.urls")),
+    path("sair/", views.logout_view),
 
 ]

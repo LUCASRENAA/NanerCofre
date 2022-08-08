@@ -1,3 +1,4 @@
+import datetime
 from datetime import timedelta
 
 import matplotlib
@@ -18,10 +19,21 @@ def check_admin(user):
    return user.is_superuser
 
 
+def pegarData():
+    current_time = datetime.datetime.now()
+    ano = current_time.year
+    mes = current_time.month
+    dia = current_time.day
+    data = current_time
+    return ano,mes,dia,data
+
 @user_passes_test(check_admin)
 def inicio(request):
+    import datetime
 
-    return render(request,'Gerenciador/gerenciador.html')
+    ano,mes,dia,data = pegarData()
+    dados = {"ano":ano,"mes":mes,"dia":dia,"data":data}
+    return render(request,'Gerenciador/escolher.html',dados)
 
 @user_passes_test(check_admin)
 def contasCriadas(request,ano,mes,dia,opcao):
@@ -54,14 +66,50 @@ def contasCriadas(request,ano,mes,dia,opcao):
         print(senhas)
         usuarios_que_vao.append(Usuario_Quantidade_senhas(usuario_filtro,senhas))
 
-    dados = {"titulo":titulo,"azul":cor_azul,"vermelho":cor_vermelha,"texto_complementar":texto_complementar,
-        "usuarios_vetor":usuarios_que_vao,"senhas_criptografadas":senhas_criptografadas,"texto_embaixo":texto_embaixo,"usuarios":usuarios,'usuario_filtro':usuarios_filtro,'pagina':"Usuario",'opcao':opcao,"texto_opcao":texto_opcao}
+    ano2, mes, dia, data = pegarData()
+
+    dados = {"ano":ano,"titulo":titulo,"azul":cor_azul,"vermelho":cor_vermelha,"texto_complementar":texto_complementar,
+        "usuarios_vetor":usuarios_que_vao,"senhas_criptografadas":senhas_criptografadas,
+             "ano2": ano2, "mes": mes, "dia": dia, "data": data,"texto_embaixo":texto_embaixo,"usuarios":usuarios,'usuario_filtro':usuarios_filtro,'pagina':"Usuario",'opcao':opcao,"texto_opcao":texto_opcao}
     return render(request,'Gerenciador/gerenciador.html',dados)
 
+@user_passes_test(check_admin)
+def usuariosSemSenhas(request):
+    ano_pegar, mes_pegar, dia_pegar, data_pegar = pegarData()
 
+    #usuarios = User.objects.get(username= "TESAUIFHASUFHASIU1safas1f65a@!@").date_joined -timedelta(hours=3)
+    usuarios = User.objects.all()
+    usuarios_filtro = []
+    texto_opcao = " (Usuários sem senhas)"
+    class UsuaioSemSenha:
+        def __init__(self, senhas, usuario):
+            self.senhas = senhas
+            self.usuario = usuario
+
+
+
+    for usuario in usuarios:
+        if len(SenhaCriptografada.objects.filter(usuario=usuario)) == 0:
+
+            usuarios_filtro.append(UsuaioSemSenha(SenhaCriptografada.objects.filter(usuario=usuario),usuario))
+
+
+    titulo = "Pessoas"
+    cor_azul = "Pessoas com senhas"
+    cor_vermelha = "Pessoas que não colocaram senhas"
+    texto_complementar= "Pessoas que não colocaram senhas"
+
+
+    dados = {"titulo":titulo,"azul":cor_azul,"vermelho":cor_vermelha,"texto_complementar":texto_complementar,
+      "texto_opcao":texto_opcao,"usuarios_vetor":usuarios_filtro,"usuarios":usuarios,'usuario_filtro':usuarios_filtro,'pagina':"Usuario",
+             "ano":ano_pegar,"mes":mes_pegar,"dia":dia_pegar,"ano2":ano_pegar}
+    return render(request,'Gerenciador/gerenciador.html',dados)
 
 @user_passes_test(check_admin)
 def usuarioSenhas(request,usuario,ano):
+    ano_pegar, mes_pegar, dia_pegar, data_pegar = pegarData()
+
+
     #usuarios = User.objects.get(username= "TESAUIFHASUFHASIU1safas1f65a@!@").date_joined -timedelta(hours=3)
     usuario= User.objects.get(username=usuario)
     senhas = SenhaCriptografada.objects.filter(usuario=usuario)
@@ -69,6 +117,15 @@ def usuarioSenhas(request,usuario,ano):
     sub_titulo = "Ano de " + ano
 
     meses = []
+
+    ano_real = datetime.datetime.now().year
+
+    lista_ano = []
+    for a in range(0, 10):
+        lista_ano.append(int(ano_real) - a)
+
+
+
 
     class Usuario_Mes:
         def __init__(self, senhas, mes):
@@ -85,20 +142,105 @@ def usuarioSenhas(request,usuario,ano):
 
 
 
-    dados = {"senhas":meses,'ano':ano,'titulo':titulo,'subtitulo':sub_titulo,'usuario': request.user}
+
+
+    dados = {"mes":mes_pegar,"dia":dia_pegar,"senhas":meses,'ano':ano,'titulo':titulo,'subtitulo':sub_titulo,'usuario': request.user,"anos":lista_ano}
     return render(request,'Gerenciador/usuario_criacao.html',dados)
 
 
 @user_passes_test(check_admin)
-def usuarioGeral(request):
+def usuarioGeral(request,ano):
+    ano_pegar, mes_pegar, dia_pegar, data_pegar = pegarData()
+
     #usuarios = User.objects.get(username= "TESAUIFHASUFHASIU1safas1f65a@!@").date_joined -timedelta(hours=3)
     usuarios= User.objects.all()
     senhas = SenhaCriptografada.objects.all()
-    titulo = "Modificações no chaveiro por mês de todos os usuarios"
+    titulo = "Quantida de senhas no chaveiro por mês de todos os usuarios"
 
     meses = []
-    ano = 2022
+    ano_real =     datetime.datetime.now().year
 
+    lista_ano = []
+    for a in range(0,10):
+        lista_ano.append(int(ano_real)-a)
+    class Usuario_Mes:
+        def __init__(self, senhas, mes):
+            self.senhas = senhas
+            self.mes = mes
+    for mes in range(1,13):
+        senhas = SenhaCriptografada.objects.filter(
+                                                   created_date__year=ano,
+                                                   created_date__month=mes,
+                                                   )
+
+
+        meses.append(Usuario_Mes(senhas,Mes_String(mes)))
+
+
+
+    dados = {"titulo":titulo,"senhas":meses,'ano':ano,'usuario': request.user,"anos":lista_ano,"mes":mes_pegar,"dia":dia_pegar}
+    return render(request,'Gerenciador/usuarios.html',dados)
+
+
+
+@user_passes_test(check_admin)
+def usuarioSenhasCriacao(request,usuario,ano):
+    ano_pegar, mes_pegar, dia_pegar, data_pegar = pegarData()
+
+
+    #usuarios = User.objects.get(username= "TESAUIFHASUFHASIU1safas1f65a@!@").date_joined -timedelta(hours=3)
+    usuario= User.objects.get(username=usuario)
+    senhas = SenhaCriptografada.objects.filter(usuario=usuario)
+    titulo = "Modificações no chaveiro por mês do usuário " + str(usuario)
+    sub_titulo = "Ano de " + ano
+
+    meses = []
+
+    ano_real = datetime.datetime.now().year
+
+    lista_ano = []
+    for a in range(0, 10):
+        lista_ano.append(int(ano_real) - a)
+
+
+
+
+    class Usuario_Mes:
+        def __init__(self, senhas, mes):
+            self.senhas = senhas
+            self.mes = mes
+    for mes in range(1,13):
+        senhas = SenhaCriptografada.objects.filter(usuario=usuario,
+                                                   created_date__year=ano,
+                                                   created_date__month=mes,
+                                                   )
+
+
+        meses.append(Usuario_Mes(senhas,Mes_String(mes)))
+
+
+
+
+
+    dados = {"mes":mes_pegar,"dia":dia_pegar,"senhas":meses,'ano':ano,'titulo':titulo,'subtitulo':sub_titulo,'usuario': request.user,"anos":lista_ano}
+    return render(request,'Gerenciador/usuario_criacao.html',dados)
+
+
+@user_passes_test(check_admin)
+def usuarioGeralCriacao(request,ano):
+    ano_pegar, mes_pegar, dia_pegar, data_pegar = pegarData()
+
+    #usuarios = User.objects.get(username= "TESAUIFHASUFHASIU1safas1f65a@!@").date_joined -timedelta(hours=3)
+    usuarios= User.objects.all()
+    senhas = SenhaCriptografada.objects.all()
+    titulo = "Quantida de senhas no chaveiro por mês de todos os usuarios"
+
+    meses = []
+    ano_real =     datetime.datetime.now().year
+
+    lista_ano = []
+    for a in range(0,10):
+        lista_ano.append(int(ano_real)-a)
     class Usuario_Mes:
         def __init__(self, senhas, mes):
             self.senhas = senhas
@@ -114,9 +256,8 @@ def usuarioGeral(request):
 
 
 
-    dados = {"titulo":titulo,"senhas":meses,'ano':ano,'usuario': request.user}
+    dados = {"titulo":titulo,"senhas":meses,'ano':ano,'usuario': request.user,"anos":lista_ano,"mes":mes_pegar,"dia":dia_pegar}
     return render(request,'Gerenciador/usuarios.html',dados)
-
 
 class Usuario_Quantidade_senhas:
         def __init__(self, usuario, quantidade):

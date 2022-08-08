@@ -163,17 +163,26 @@
             </h6>
             <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/gerenciador/usuario/{{ ano }}">
                   <span data-feather="file-text"></span>
-                  Usuario
+                  Senhas modificadas no chaveiro
                 </a>
 
               </li>
             </ul>
 
+                   <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="/gerenciador/usuario_criado/{{ ano }}">
+                  <span data-feather="file-text"></span>
+                  Senhas criadas no chaveiro
+                </a>
+
+              </li>
+            </ul>
                 <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/gerenciador/criado/{{ ano2 }}/{{ mes }}/{{ dia }}/2">
                   <span data-feather="file-text"></span>
                    Contas Criados no mês
                 </a>
@@ -183,9 +192,9 @@
 
                 <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/gerenciador/usuario_sem_senhas/">
                   <span data-feather="file-text"></span>
-                  Qualquer coisa
+                  Usuários sem senhas
                 </a>
 
               </li>
@@ -205,7 +214,7 @@
 
 
 
-    <div id="chart_div"></div>
+    <div id="chart_div" style="width: 900px; height: 300px;"></div>
 <p></p>
 
          <hr>
@@ -294,31 +303,27 @@
 
 </html>
 <script>
+    google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        Usuarios_com_senhas = {{ usuarios| length}} - {{ usuario_filtro| length}}
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['{{ azul }}',      Usuarios_com_senhas],
+          ['{{ vermelho }}',       {{ usuario_filtro| length}}],
+
+        ]);
+
+        var options = {
+          title: '{{ titulo }}'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
 
 
-google.charts.load('current', {packages: ['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawMaterial);
 
-function drawMaterial() {
-      var data = google.visualization.arrayToDataTable([
-        ['{{ titulo }}', '{{ azul }}', '{{ vermelho }}'],
-        ['{{ titulo }}', {{ usuarios| length}}, {{ usuario_filtro| length}}],
-      ]);
-
-      var materialOptions = {
-        chart: {
-          title: '{{ texto_embaixo }} '
-        },
-        hAxis: {
-          title: 'Total Population',
-          minValue: 0,
-        },
-        vAxis: {
-          title: 'City'
-        },
-        bars: 'horizontal'
-      };
-      var materialChart = new google.charts.Bar(document.getElementById('chart_div'));
-      materialChart.draw(data, materialOptions);
-    }
 </script>
