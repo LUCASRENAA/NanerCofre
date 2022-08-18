@@ -58,8 +58,8 @@ A demonstração da ferramente será realizada através de um video ensinando a 
 ### Primeiro acesso
 
 ```
-git clone https://github.com/LUCASRENAA/Luner.git
-cd Luner
+git clone https://github.com/LUCASRENAA/NanerCofre.git
+cd NanerCofre
 sudo apt-get install libpq-dev python3-dev
 sudo pip install psycopg2
 pip3 install -r requirements.txt 
