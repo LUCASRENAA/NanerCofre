@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <form>
+        <div class="form-group">
+          <label for="length">Password Length</label>
+          <input type="number" class="form-control" id="length" placeholder="Enter password length">
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="uppercase" checked>
+          <label class="form-check-label" for="uppercase">Include uppercase letters</label>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="lowercase" checked>
+          <label class="form-check-label" for="lowercase">Include lowercase letters</label>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="numbers">
+          <label class="form-check-label" for="numbers">Include numbers</label>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="special-characters">
+          <label class="form-check-label" for="special-characters">Include special characters</label>
+        </div>
+        <button type="button" class="btn btn-primary" id="generate-button" onclick="generatePassword()">Generate Password</button>
+      </form>
+      <div class="mt-3">
+        <h4>Generated Password:</h4>
+        <p id="password" tabindex="0"></p>
+        <button type="button" class="btn btn-primary" id="copy-button">Copy Password</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+    function generatePassword() {
+  // Get the password length and options from the form
+  var length = document.getElementById('length').value;
+  var includeUppercase = document.getElementById('uppercase').checked;
+  var includeLowercase = document.getElementById('lowercase').checked;
+  var includeNumbers = document.getElementById('numbers').checked;
+  var includeSpecialCharacters = document.getElementById('special-characters').checked;
+
+  // Create a string of all the possible characters
+  var characters = '';
+  if (includeUppercase) {
+    characters += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  }
+  if (includeLowercase) {
+    characters += 'abcdefghijklmnopqrstuvwxyz';
+  }
+  if (includeNumbers) {
+    characters += '0123456789';
+  }
+  if (includeSpecialCharacters) {
+    characters += '!@#$%^&*()';
+  }
+
+  // Generate the password
+  var password = '';
+  for (var i = 0; i < length; i++) {
+    password += characters[Math.floor(Math.random() * characters.length)];
+  }
+
+  // Display the password
+  document.getElementById('password').innerHTML = password;
+}
+
+
+
+document.getElementById('copy-button').addEventListener('click', function() {
+  // Get the password element
+  var passwordElement = document.getElementById('password');
+
+  // Create a temporary input element
+  var tempInput = document.createElement('input');
+
+  // Set the value of the input to the password
+  tempInput.value = passwordElement.textContent;
+
+  // Append the input to the body
+  document.body.appendChild(tempInput);
+
+  // Select the text
+  tempInput.select();
+
+  // Copy the selected text to the clipboard
+  document.execCommand('copy');
+
+  // Remove the input element
+  document.body.removeChild(tempInput);
+});
+
+
+</script>

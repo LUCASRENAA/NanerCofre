@@ -1,0 +1,109 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: white;
+      height: 100%;
+    }
+    .notepad {
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      height: 100%;
+    }
+    .title-entry {
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 10px 10px 0 0;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      font-size: 24px;
+      padding: 15px;
+      text-align: center;
+    }
+    .title-entry::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+    .note-area {
+      height: calc(100% - 80px);
+      overflow-y: scroll;
+      padding: 15px;
+    }
+    .save-button {
+      background-color: white;
+      border: none;
+      border-radius: 0 0 10px 10px;
+      color: black;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 15px;
+    }
+    .save-button:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-6 notepad">
+ <form action="/criptografar_texto/" enctype="multipart/form-data" method="post">
+              {% csrf_token %}
+
+          <input type="text" class="form-control title-entry"  id="title"name="title" placeholder="Title" value="{{ titulo }}">
+          <div class="note-area">
+            <textarea class="form-control" rows="20" id="description" name="description"  value="{{ descricao }}">{{ descricao }}</textarea>
+                      <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#modalExemplo">Save</button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Digite a chave do cofre</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+               <form action="/front/criptografar_texto/" enctype="multipart/form-data" method="post">
+
+      <div class="modal-body">
+              {% csrf_token %}
+        <input name="key">
+                <input id="test" name="title" value="{{ titulo }}" hidden>
+        <input id="test2" name="description" value="{{ descricao }}" hidden>
+<input id="test3" name="id" value="{{ id }}" hidden>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button class="btn btn-primary" type="/frontend/criptografar_texto/">Salvar mudanças</button>
+      </div>
+                                </form>
+
+    </div>
+
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+ <script>
+    document.getElementById('title').addEventListener('input', function() {
+      document.getElementById('test2').value = this.value;
+    });
+    document.getElementById('description').addEventListener('input', function() {
+      document.getElementById('test').value = this.value;
+    });
+  </script>
