@@ -7,7 +7,6 @@
     <title>Title</title>
 </head>
 <body>
-<div id="cofre">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Luner</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,7 +133,6 @@ document.getElementById('naoedita').value = filteredJson[0]['id']
 
 
 
-</div>
 
 </body>
 </html>
@@ -221,7 +219,7 @@ document.getElementById('copy-button').addEventListener('click', function() {
 
       <div class="modal-body">
               {% csrf_token %}
-        <input name="key"  type="password">
+        <input name="key" >
                 <input id="test" name="description" value="{{ titulo }}" hidden>
         <input id="test2" name="title" value="{{ descricao }}" hidden>
 <input id="naoedita" name="id" value="{{ id }}" hidden >

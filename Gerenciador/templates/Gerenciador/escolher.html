@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+    <title>Cofre Naner</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/bootstrap/js/bootstrap.min.js">
+
+    <link rel="icon" href="/static/imagens/nanerlogo.ico">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
+
+<meta charset="UTF-8">
+<script src="https://kit.fontawesome.com/7dfa415ddd.js" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+</head>
+<style >
+
+    body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 48px; /* Height of navbar */
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/*
+ * Utilities
+ */
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+</style>
+  <body>
+
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Cofre Naner</a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+
+
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Saved reports</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="/gerenciador/usuario/{{ ano }}">
+                  <span data-feather="file-text"></span>
+                  Senhas modificadas no chaveiro
+                </a>
+
+              </li>
+            </ul>
+                   <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="/gerenciador/usuario_criado/{{ ano }}">
+                  <span data-feather="file-text"></span>
+                  Senhas criadas no chaveiro
+                </a>
+
+              </li>
+            </ul>
+
+                <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="/gerenciador/criado/{{ ano }}/{{ mes }}/{{ dia }}/2">
+                  <span data-feather="file-text"></span>
+                   Contas Criados no mês
+                </a>
+
+              </li>
+            </ul>
+
+                <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="/gerenciador/usuario_sem_senhas/">
+                  <span data-feather="file-text"></span>
+                  Usuários sem senhas
+                </a>
+
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                  <h1>Escolha o dashborad</h1>
+
+               <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+<p></p>
+
+          </div>
+     <div class="container">
+         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+
+<p></p>
+
+
+         <h1>Escolha o ano</h1>
+<input type="number" value="{{ ano }}" id="ano">
+
+
+         <a id="anochaveiro" href="/gerenciador/usuario/{{ ano }}">Chaveiro num ano</a>
+         <button onclick="myFunction()">Ver a quantidade de chaveiros dos usuários num ano</button>
+
+                 <button>Ver a quantidade de contas criadas no ano</button>
+
+
+
+    <script type="text/javascript">
+        function myFunction() {
+            ano =  document.getElementById('ano').value
+            document.getElementById('anochaveiro').href
+                ="/gerenciador/usuario/"+ano;
+
+            document.getElementById("anochaveiro")
+                .textContent = "Vá para o ano de: " + ano;
+        }
+    </script>
+                  <h1>Escolha o mes</h1>
+         <input type="number" value="{{ mes }}" id="mes">
+
+                           <h1>Escolha o dia certo</h1>
+                  <a id="diachaveiro" href="/gerenciador/usuario/{{ ano }}">Chaveiro num ano</a>
+
+         <input type="number" value="{{ dia }}" id="dia">
+                          <button onclick="myFunction3()">Veja</button>
+
+ <script type="text/javascript">
+        function myFunction3() {
+            ano =  document.getElementById('ano').value
+                        mes =  document.getElementById('mes').value
+            dia =  document.getElementById('dia').value
+
+
+            document.getElementById('diachaveiro').href
+                = "/gerenciador/criado/"+ano + "/" +mes+"/"+dia+"/3";
+
+            document.getElementById("diachaveiro")
+                .textContent = "/gerenciador/criado/"+ano + "/" +mes+"/"+dia+"/3";
+        }
+    </script>
+
+      </div>
+
+
+        </main>
+      </div>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          datasets: [{
+            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
+
+  </body>
+
+</html>
+<script>
+
+
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawMaterial);
+
+function drawMaterial() {
+      var data = google.visualization.arrayToDataTable([
+        ['{{ titulo }}', '{{ azul }}', '{{ vermelho }}'],
+        ['{{ titulo }}', {{ usuarios| length}}, {{ usuario_filtro| length}}],
+      ]);
+
+      var materialOptions = {
+        chart: {
+          title: '{{ texto_embaixo }} '
+        },
+        hAxis: {
+          title: 'Total Population',
+          minValue: 0,
+        },
+        vAxis: {
+          title: 'City'
+        },
+        bars: 'horizontal'
+      };
+      var materialChart = new google.charts.Bar(document.getElementById('chart_div'));
+      materialChart.draw(data, materialOptions);
+    }
+</script>

@@ -1,0 +1,101 @@
+ <script>
+  async function teste() {
+const username = document.getElementById('username').value;
+const password = document.getElementById('password').value;
+const key = document.getElementById('key').value;
+  const response = await fetch('/api/token/', {
+    method: 'POST',
+    body: JSON.stringify({username, password}),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const json = await response.json();
+  const access_token = json.access;
+  localStorage.setItem('access', access_token);
+
+    myFunction2();
+    pegar(access_token,key);
+}
+
+
+function enviar_dados(){
+titulo = document.getElementById('title').value;
+nome = document.getElementById('nome').value;
+senha = document.getElementById('senha').value;
+notas = document.getElementById('notas').value;
+uri = document.getElementById('uri').value;
+key = document.getElementById('key').value;
+
+ jwt = localStorage.getItem('access');
+var data = {
+  "titulo": titulo,
+  "nome":nome,
+  "senha":senha,
+  "notas":notas,
+  "uri":uri,
+  "key": key
+};
+
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "/api/sites/", true);
+xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+xhr.send(JSON.stringify(data));
+pegar(jwt,key)
+}
+
+
+function passarValor(posicao) {
+
+
+
+  var valorJson = JSON.parse(document.getElementById("json_vem").value);
+
+    let valorPosicao = valorJson.filter(function (item) {
+  return item.id === posicao;
+});
+
+
+  document.getElementById("outro_input").value = JSON.stringify(valorPosicao);
+
+
+    json_que_esta_indo = JSON.stringify(valorPosicao);
+    document.getElementById("outro_input").value = json_que_esta_indo;
+  document.getElementById("nome").value = valorPosicao[0].nome;
+  document.getElementById("title").value = valorPosicao[0].titulo;
+
+  document.getElementById("uri").value = valorPosicao[0].uri;
+
+  document.getElementById("senha").value = valorPosicao[0].senha;
+  document.getElementById("notas").value = valorPosicao[0].nota;
+
+}
+
+async function deleteResource(id) {
+
+
+resposta = prompt('Digite "Sim" para deletar');
+
+if (resposta === "Sim"){
+ jwt = localStorage.getItem('access');
+
+  const response = await fetch(`/api/sites/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${jwt}`
+    }
+  });
+  if (!response.ok) {
+    throw new Error(`Error deleting site with id ${id}: ${response.statusText}`);
+  }
+
+    key = document.getElementById('key').value;
+
+  pegar(jwt,key);
+  }
+}
+
+
+
+
+
+</script>

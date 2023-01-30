@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import path, include
+from django.views.generic import RedirectView
 from rest_framework import routers
 from api import views
 from frontend import views as views2
 
 router = routers.DefaultRouter()
 router.register('BlocoDeNotas', views.BlocoNotasCriptografadaViewSet )
+router.register('sites', views.CredencialSitesViewSet )
+
 #router.register('ChaveMestra', views.ChaveMestraViewSet )
 
 
@@ -36,8 +39,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
+    path('', RedirectView.as_view(url='/front/home')),
+    path('cofre', RedirectView.as_view(url='/front/cofre')),
 
     path("front/", include("frontend.urls")),
+    path("gerenciador/", include("Gerenciador.urls")),
+
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),

@@ -105,9 +105,28 @@ def criptografar(request):
 
 
         return redirect("/front/home")
+
+
+
+def secreta(request):
+    if request.user.is_superuser:
+        return  HttpResponse("arquivo secreto")
+    else:
+        return HttpResponse("saia daqui que você não é administrador")
+
+def cofre(request):
+    return render(request, 'frontend/cofre.html')
+
+
 def todos(request):
-    dados = {"anotacoes": BlocoNotasCriptografada.objects.filter(user=request.user)}
-    return render(request,'frontend/home.html',dados)
+
+    if request.user.is_authenticated:
+
+        dados = {"anotacoes": BlocoNotasCriptografada.objects.filter(user=request.user)}
+        return render(request,'frontend/home.html',dados)
+    else:
+        return redirect('/login')
+
 
 def teste(request):
     dados = {"anotacoes": BlocoNotasCriptografada.objects.filter(user=request.user)}

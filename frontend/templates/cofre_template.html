@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+
 <div id="cofre">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Luner</a>
@@ -22,73 +15,37 @@
     </ul>
   </div>
 </nav>
-<input id="json_vem" hidden>
+    <textarea id="json_vem" hidden></textarea>
 <div class="container">
   <div class="row">
-    <div class="col-4 example-1 scrollbar-ripe-malinka "  style="height:100vh; width:100%;">
+    <div class="col-4 example-1 scrollbar-ripe-malinka "  style="height:80vh; width:100%;">
                   <div class="container-fluid quem-somos text-center margin">
 
                <input  type="password" name="key" id="key" hidden>
 
-        <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Titulo</th>
-      <th scope="col">Ir para o bloco de notas</th>
+                      <div id="tableContainer">
 
-    </tr>
-  </thead>
-  <tbody>
+                      </div>
 
-
-
-
-     {% for bloco in anotacoes %}
-
-
- <tr>
-      <th scope="row">        {{ bloco.titulo }}:
-</th>
-
-            <th scope="row">       <button class="btn btn-primary" onclick="filtrarJson({{ bloco.id }})">Visualizar</button>
-<script>
-    function filtrarJson(id) {
-        json2 =       document.getElementById('json_vem').value
-const json = JSON.parse(json2);
-
-         filteredJson = json.filter(item => item.id === id);
-       json_vai =  JSON.stringify(filteredJson);
-
-document.getElementById('title').value = filteredJson[0]['titulo']
-document.getElementById('description').value = filteredJson[0]['descricao']
-document.getElementById('id').value = filteredJson[0]['id']
-document.getElementById('naoedita').value = filteredJson[0]['id']
-
-}
-</script>
-    </tr>
-           <input name="key" id="key{{ bloco.id }}" hidden>
-
-         <script>
-    document.getElementById('key').addEventListener('input', function() {
-      document.getElementById('key{{ bloco.id }}').value = this.value;
-    });
-
-  </script>
-       {% endfor %}
-              </tbody>
-</table>
     </div>
         </div>
     <div class="col-4">
 <form action="/criptografar_texto/" enctype="multipart/form-data" method="post">
               {% csrf_token %}
+
+    <input id="outro_input" hidden>
           <input type="text" class="form-control title-entry"  id="id"name="id" placeholder="id" value="{{ titulo }}">
+          <input type="text" class="form-control title-entry"  id="uri"name="uri" placeholder="Uri" value="{{ titulo }}">
 
           <input type="text" class="form-control title-entry"  id="title"name="title" placeholder="Title" value="{{ titulo }}">
+
+              <input type="text" class="form-control title-entry"  id="nome"name="nome" placeholder="Nome" value="{{ titulo }}">
+              <input type="password" class="form-control title-entry"  id="senha"name="senha" placeholder="Senha" value="{{ titulo }}">
+        <button type="button" class="btn btn-primary" id="copy-button2" data-toggle="tooltip" data-placement="top" title="Copy">Copy Password</button>
+
           <div class="note-area">
-            <textarea class="form-control" rows="20" id="description" name="description"  value="{{ descricao }}">{{ descricao }}</textarea>
-                      <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#modalExemplo">Save</button>
+            <textarea class="form-control" rows="15" id="notas" name="notas"  value="{{ descricao }}">{{ descricao }}</textarea>
+                      <button type="button" class="btn btn-primary btn-lg btn-block" onclick="enviar_dados()">Save</button>
 
           </div>
         </form>    </div>
@@ -120,7 +77,7 @@ document.getElementById('naoedita').value = filteredJson[0]['id']
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
         <h4>Generated Password:</h4>
-        <p id="password" tabindex="0"></p>
+        <p id="gerarsenha" tabindex="0"></p>
         <button type="button" class="btn btn-primary" id="copy-button" data-toggle="tooltip" data-placement="top" title="Copy">Copy Password</button>
       </div>
     </div>
@@ -171,14 +128,14 @@ document.getElementById('naoedita').value = filteredJson[0]['id']
   }
 
   // Display the password
-  document.getElementById('password').innerHTML = password;
+  document.getElementById('gerarsenha').innerHTML = password;
 }
 
 
 
 document.getElementById('copy-button').addEventListener('click', function() {
   // Get the password element
-  var passwordElement = document.getElementById('password');
+  var passwordElement = document.getElementById('gerarsenha');
 
   // Create a temporary input element
   var tempInput = document.createElement('input');
@@ -200,6 +157,34 @@ document.getElementById('copy-button').addEventListener('click', function() {
 
 });
 
+
+
+
+
+
+document.getElementById('copy-button2').addEventListener('click', function() {
+  // Get the password element
+      var passwordElement = document.getElementById('senha');
+
+  // Create a temporary input element
+  var tempInput = document.createElement('input');
+
+  // Set the value of the input to the password
+  tempInput.value = passwordElement.value;
+
+  // Append the input to the body
+  document.body.appendChild(tempInput);
+
+  // Select the text
+  tempInput.select();
+
+  // Copy the selected text to the clipboard
+  document.execCommand('copy');
+
+  // Remove the input element
+  document.body.removeChild(tempInput);
+
+});
 
 </script>
 
@@ -273,46 +258,11 @@ document.getElementById('copy-button').addEventListener('click', function() {
       document.getElementById('naoedita').value = this.value;
     });
   </script>
-<script>
-usuario =  "{{ username }}";
-password = "{{ password }}";
 
-
-if (usuario === "")
-usuario = prompt('usuario', '', { type: 'password' });
-
-if (password === "")
-senha = prompt('Enter your password:', '', { type: 'password' });
-
-
-    var xhr = new XMLHttpRequest();
-xhr.open("POST", "http://127.0.0.1:8000/api/token/");
-xhr.setRequestHeader("Content-Type", "application/json");
-xhr.send(JSON.stringify({
-  "username": usuario,
-  "password": senha
-}));
-
-xhr.onload = function() {
-  if (xhr.status === 200) {
-    // success!
-    var data = JSON.parse(xhr.responseText);
-    pegar(data["access"])
-    console.log(data["access"]);
-  } else {
-    // something went wrong
-    console.error(xhr.statusText);
-  }
-};
-
-
-
-</script>
 
 <script>
-function pegar(jwt) {
-key = prompt('Enter your key:', '', { type: 'password' });
-a = fetch('http://127.0.0.1:8000/api/BlocoDeNotas?key=' + key, {
+function pegar(jwt,key) {
+a = fetch('/api/sites?key=' + key, {
   method: 'GET',
   headers: {
     'Authorization': 'Bearer ' + jwt
@@ -325,6 +275,26 @@ a = fetch('http://127.0.0.1:8000/api/BlocoDeNotas?key=' + key, {
 
         document.getElementById('json_vem').value = text;
 
+
+
+// Parse o JSON para um objeto JavaScript
+var obj = JSON.parse(text);
+
+// Cria uma tabela HTML
+var table = "<table class='table'><tr><th scope='col'>Titulo</th><th scope='col'>Id</th><th scope='col'>Deletar</th></tr>";
+for (var i = 0; i < obj.length; i++) {
+  var name = obj[i].titulo.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  var age = obj[i].nome;
+  var city = obj[i].uri.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  var id = obj[i].id;
+
+
+  table += "<tr><td scope='row'>" + name + "</td> <td scope='row'> <button onclick='passarValor("+id+")'>"  + id +"</button></td><td scope='row'> <button onclick='deleteResource("+id+")'>"  + id + "</button></td></tr>";
+}
+table += "</table>";
+
+// Adiciona a tabela ao HTML
+document.getElementById("tableContainer").innerHTML = table;
   });
 
 
