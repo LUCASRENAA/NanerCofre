@@ -155,7 +155,7 @@ def usuarioGeral(request,ano):
     #usuarios = User.objects.get(username= "TESAUIFHASUFHASIU1safas1f65a@!@").date_joined -timedelta(hours=3)
     usuarios= User.objects.all()
     senhas = CredencialSites.objects.all()
-    titulo = "Quantida de senhas no chaveiro por mês de todos os usuarios"
+    titulo = "Quantidade de senhas no chaveiro por mês de todos os usuarios"
 
     meses = []
     ano_real =     datetime.datetime.now().year
@@ -233,7 +233,7 @@ def usuarioGeralCriacao(request,ano):
     #usuarios = User.objects.get(username= "TESAUIFHASUFHASIU1safas1f65a@!@").date_joined -timedelta(hours=3)
     usuarios= User.objects.all()
     senhas = CredencialSites.objects.all()
-    titulo = "Quantida de senhas no chaveiro por mês de todos os usuarios"
+    titulo = "Quantidade de senhas no chaveiro por mês de todos os usuarios"
 
     meses = []
     ano_real =     datetime.datetime.now().year

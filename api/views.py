@@ -223,23 +223,31 @@ class CredencialSitesViewSet(viewsets.ModelViewSet):
         key = data.get('key')
 
         titulo = data.get('titulo')
-        try:
-            texto = data.get('senha')
+        if 1 == 1:
             key = bytes(str(key), 'utf-8')
+            texto = data.get('senha')
+
             texto = bytes(texto, 'utf-8')
+            print(texto)
             e_data, e_cipher = encriptar(key, texto)
 
-            # data.update({'texto': "teste","user":self.request.user.id})
-            #print(e_data)
-            #print(e_cipher)
-            #print("aqui")
-            if titulo == "+":
-                serializer.save(senha=e_data, e_cipher_senha=e_cipher.nonce, user=self.request.user)
+            notas = data.get('notas')
 
-            else:
-                serializer.save(titulo=titulo, texto=e_data, e_cipher=e_cipher.nonce, user=self.request.user)
-        except:
-            serializer.save(titulo=titulo)
+            notas = bytes(notas, 'utf-8')
+
+            e_data_notas, e_cipher_notas = encriptar(key, notas)
+
+            nome = data.get('nome')
+
+            nome = bytes(nome, 'utf-8')
+
+            e_data_nome, e_cipher_nome = encriptar(key, nome)
+
+            serializer.save(titulo=titulo, senha=e_data, e_cipher_senha=e_cipher.nonce,
+                            nome=e_data_nome,e_cipher_nome=e_cipher_nome.nonce,
+                            notas=e_data_notas,e_cipher_notas=e_cipher_notas.nonce,
+
+                            user=self.request.user)
 
 
 

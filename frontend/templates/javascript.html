@@ -16,6 +16,43 @@ const key = document.getElementById('key').value;
     pegar(access_token,key);
 }
 
+function editar_dados(){
+const key = document.getElementById('key').value;
+ jwt = localStorage.getItem('access');
+const id = document.getElementById('id').value;
+const headers = new Headers({
+  'Authorization': 'Bearer '+ jwt,
+  'Content-Type': 'application/json'
+});
+
+
+titulo = document.getElementById('title').value;
+nome = document.getElementById('nome').value;
+senha = document.getElementById('senha').value;
+notas = document.getElementById('notas').value;
+uri = document.getElementById('uri').value;
+
+
+const data = {
+  "titulo": titulo,
+  "nome":nome,
+  "senha":senha,
+  "notas":notas,
+  "uri":uri,
+  "key": "1234567891234567"
+};
+
+alert("aqui");
+fetch('/api/sites/' + id+'/', {
+  method: 'PUT',
+  headers: headers,
+  body: JSON.stringify(data)
+})
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+pegar(jwt,key);
+}
 
 function enviar_dados(){
 titulo = document.getElementById('title').value;
@@ -60,6 +97,8 @@ function passarValor(posicao) {
 
     json_que_esta_indo = JSON.stringify(valorPosicao);
     document.getElementById("outro_input").value = json_que_esta_indo;
+      document.getElementById("id").value = valorPosicao[0].id;
+
   document.getElementById("nome").value = valorPosicao[0].nome;
   document.getElementById("title").value = valorPosicao[0].titulo;
 

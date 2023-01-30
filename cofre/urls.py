@@ -39,8 +39,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
-    path('', RedirectView.as_view(url='/front/home')),
-    path('cofre', RedirectView.as_view(url='/front/cofre')),
+    path('', RedirectView.as_view(url='/front/cofre')),
+    path('bloco', RedirectView.as_view(url='/front/home')),
 
     path("front/", include("frontend.urls")),
     path("gerenciador/", include("Gerenciador.urls")),
