@@ -207,5 +207,5 @@ def submit_registro(request):
             return HttpResponse('<h1> Usuario já cadastrado </h1>')
 
         print("hey")
-        return redirect('/login')
+        return redirect('/front/cofre')
     return HttpResponse('<h1> faça um post </h1>')

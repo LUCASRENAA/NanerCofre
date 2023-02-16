@@ -53,33 +53,34 @@
  <div class="col-4">
 <form>
         <div class="form-group">
-          <label for="length">Password Length</label>
-          <input type="number" class="form-control" id="length" placeholder="Enter password length">
+            <h2>Gerar senhas</h2>
+          <label for="length">Tamanho da senha</label>
+          <input type="number" class="form-control" id="length" placeholder="Digite o tamanho da senha">
         </div>
         <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="uppercase" checked>
-          <label class="form-check-label" for="uppercase">Include uppercase letters</label>
+          <label class="form-check-label" for="uppercase">Incluir letras maiusculas</label>
         </div>
         <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="lowercase" checked>
-          <label class="form-check-label" for="lowercase">Include lowercase letters</label>
+          <label class="form-check-label" for="lowercase">Incluir letras minusculas</label>
         </div>
         <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="numbers">
-          <label class="form-check-label" for="numbers">Include numbers</label>
+          <label class="form-check-label" for="numbers">Incluir numéros</label>
         </div>
         <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="special-characters">
-          <label class="form-check-label" for="special-characters">Include special characters</label>
+          <label class="form-check-label" for="special-characters">Incluir caracteres especiais</label>
         </div>
-        <button type="button" class="btn btn-primary" id="generate-button" onclick="generatePassword()">Generate Password</button>
+        <button type="button" class="btn btn-primary" id="generate-button" onclick="generatePassword()">Gerar senha</button>
       </form>
       <div class="mt-3">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-        <h4>Generated Password:</h4>
+        <h4>Senha gerada:</h4>
         <p id="gerarsenha" tabindex="0"></p>
-        <button type="button" class="btn btn-primary" id="copy-button" data-toggle="tooltip" data-placement="top" title="Copy">Copy Password</button>
+        <button type="button" class="btn btn-primary" id="copy-button" data-toggle="tooltip" data-placement="top" title="Copy">Copiar senha</button>
       </div>
     </div>
 </div>
@@ -282,6 +283,7 @@ a = fetch('/api/sites?key=' + key, {
 var obj = JSON.parse(text);
 
 // Cria uma tabela HTML
+
 var table = "<table class='table'><tr><th scope='col'>Titulo</th><th scope='col'>Id</th><th scope='col'>Deletar</th></tr>";
 for (var i = 0; i < obj.length; i++) {
   var name = obj[i].titulo.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -290,7 +292,7 @@ for (var i = 0; i < obj.length; i++) {
   var id = obj[i].id;
 
 
-  table += "<tr><td scope='row'>" + name + "</td> <td scope='row'> <button onclick='passarValor("+id+")'>"  + id +"</button></td><td scope='row'> <button onclick='deleteResource("+id+")'>"  + id + "</button></td></tr>";
+  table += "<tr><td scope='row'>" + name + "</td> <td scope='row'> <button onclick='passarValor("+id+")'> <img  width='15' height='15' src='https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-512.png' />"   +"</button></td><td scope='row'> <button onclick='deleteResource("+id+")'> <img width='15'  height='15' src='https://cdn-icons-png.flaticon.com/512/2891/2891491.png'/>"  + "</button></td></tr>";
 }
 table += "</table>";
 
