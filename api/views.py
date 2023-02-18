@@ -1,5 +1,7 @@
+import json
+
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -161,11 +163,12 @@ class CredencialSitesViewSet(viewsets.ModelViewSet):
     serializer_class = CredencialSitesSerializer
     http_method_names = ['get', 'post', 'put', 'path','delete']
 
-    def list(self,request):
-        import json
 
-        key = self.request.query_params['key']
-        print(self.request.data)
+    def list (self,request):
+        import json
+        #key = request.query_params['key']
+        key = self.request.META.get('HTTP_KEY')
+
         key = bytes(key, 'utf-8')
         dados = []
 
@@ -196,12 +199,12 @@ class CredencialSitesViewSet(viewsets.ModelViewSet):
             d_data_senha = limparbyte(d_data_senha)
             d_data_nota = limparbyte(d_data_nota)
 
-            dados.append({'titulo':str(bloco.titulo),'nome':str(d_data),'id':bloco.id,'uri':uri,'senha':d_data_senha,
-                          'nota':d_data_nota})
-            #print(d_data)
-        #print(dados)
+            dados.append({'titulo': str(bloco.titulo), 'nome': str(d_data), 'id': bloco.id, 'uri': uri,
+                          'senha': d_data_senha,
+                          'nota': d_data_nota})
+            # print(d_data)
+        # print(dados)
         return HttpResponse(json.dumps(dados), content_type="application/json")
-
     queryset = CredencialSites.objects.all()
 
     def destroy(self, request, *args, **kwargs):
@@ -252,27 +255,79 @@ class CredencialSitesViewSet(viewsets.ModelViewSet):
 
 
 
+
     def perform_create(self, serializer):
         data = self.request.data.copy()
 
         key = data.get('key')
+        visualizar = data.get('visualizar')
+        print(visualizar)
 
-        texto =  data.get('nome')
-        senha =  data.get('senha')
-        notas =  data.get('notas')
+        """
+        if visualizar == '1':
+            import json
+            key = bytes(key, 'utf-8')
+            dados = []
+
+            try:
+                uri = self.request.query_params['uri']
+
+                blocos = CredencialSites.objects.filter(user=self.request.user, uri=uri)
+            except:
+                blocos = CredencialSites.objects.filter(user=self.request.user)
+            print("aqui?")
+            for bloco in blocos:
+                print(bloco)
+
+                data = bloco.nome
+                e_cipher = bloco.e_cipher_nome
+                uri = bloco.uri
+
+                senha = bloco.senha
+                e_cipher_senha = bloco.e_cipher_senha
+
+                notas = bloco.notas
+                e_cipher_notas = bloco.e_cipher_notas
+                try:
+                    d_data = str(decriptar(key, data, e_cipher))
+                    d_data_senha = str(decriptar(key, senha, e_cipher_senha))
+                    d_data_nota = str(decriptar(key, notas, e_cipher_notas))
+
+                except:
+                    d_data = "b''"
+                d_data = limparbyte(d_data)
+                d_data_senha = limparbyte(d_data_senha)
+                d_data_nota = limparbyte(d_data_nota)
+
+                dados.append({'titulo': str(bloco.titulo), 'nome': str(d_data), 'id': bloco.id, 'uri': uri,
+                              'senha': d_data_senha,
+                              'nota': d_data_nota})
+                # print(d_data)
+            # print(dados)
+            print("ceguei")
+            print(dados)
 
 
-        key = bytes(str(key), 'utf-8')
-        texto = bytes(texto, 'utf-8')
-        senha = bytes(senha, 'utf-8')
-        notas = bytes(notas, 'utf-8')
+            return JsonResponse(json.dumps(dados), safe=False)
+        """
 
-        e_data, e_cipher =     encriptar(key,texto)
-        e_data_senha, e_cipher_senha =     encriptar(key,senha)
-        e_data_notas, e_cipher_notas =     encriptar(key,notas)
+        if 1 == 1:
+                texto =  data.get('nome')
+                senha =  data.get('senha')
+                notas =  data.get('notas')
 
-        #data.update({'texto': "teste","user":self.request.user.id})
-        serializer.save(nome=e_data,e_cipher_nome=e_cipher.nonce,user=self.request.user,
-                        senha=e_data_senha,e_cipher_senha=e_cipher_senha.nonce,
-                        notas=e_data_notas,e_cipher_notas=e_cipher_notas.nonce)
+
+                key = bytes(str(key), 'utf-8')
+                texto = bytes(texto, 'utf-8')
+                senha = bytes(senha, 'utf-8')
+                notas = bytes(notas, 'utf-8')
+
+                e_data, e_cipher =     encriptar(key,texto)
+                e_data_senha, e_cipher_senha =     encriptar(key,senha)
+                e_data_notas, e_cipher_notas =     encriptar(key,notas)
+
+                #data.update({'texto': "teste","user":self.request.user.id})
+                serializer.save(nome=e_data,e_cipher_nome=e_cipher.nonce,user=self.request.user,
+                                senha=e_data_senha,e_cipher_senha=e_cipher_senha.nonce,
+                                notas=e_data_notas,e_cipher_notas=e_cipher_notas.nonce)
 

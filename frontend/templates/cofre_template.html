@@ -41,7 +41,7 @@
 
               <input type="text" class="form-control title-entry"  id="nome"name="nome" placeholder="Nome" value="{{ titulo }}">
               <input type="password" class="form-control title-entry"  id="senha"name="senha" placeholder="Senha" value="{{ titulo }}">
-        <button type="button" class="btn btn-primary" id="copy-button2" data-toggle="tooltip" data-placement="top" title="Copy">Copy Password</button>
+        <button type="button" class="btn btn-primary" id="copy-button2" data-toggle="tooltip" data-placement="top" title="Copy">Copiar senha</button>
 
           <div class="note-area">
             <textarea class="form-control" rows="15" id="notas" name="notas"  value="{{ descricao }}">{{ descricao }}</textarea>
@@ -264,11 +264,18 @@ document.getElementById('copy-button2').addEventListener('click', function() {
 
 <script>
 function pegar(jwt,key) {
-a = fetch('/api/sites?key=' + key, {
+
+ const data = {
+  "visualizar": '1',
+  "key": key
+};
+a = fetch('/api/sites', {
   method: 'GET',
   headers: {
-    'Authorization': 'Bearer ' + jwt
+    'Authorization': 'Bearer ' + jwt,
+    'key': key
   },
+
 
 }) .then(response => response.text())
   .then(text => {
