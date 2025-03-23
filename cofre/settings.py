@@ -29,7 +29,7 @@ except KeyError as e:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.108','127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -82,11 +82,15 @@ WSGI_APPLICATION = 'cofre.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+import os
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Ou 'django.db.backends.mysql', dependendo do banco
+        'NAME': os.getenv('DJANGO_DB_NAME'),        # Nome do banco de dados
+        'USER': os.getenv('DJANGO_DB_USER'),        # Nome de usuário do banco de dados
+        'PASSWORD': os.getenv('DJANGO_DB_PASSWORD'),# Senha do banco de dados
+        'HOST': os.getenv('DJANGO_DB_HOST'),        # Host do banco de dados (por exemplo, 'localhost' ou 'db' se usando docker)
+        'PORT': '5432',                             # Porta do PostgreSQL (modifique se usar outro banco)
     }
 }
 

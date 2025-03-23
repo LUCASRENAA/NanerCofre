@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Serviço da aplicação Django
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python create_superuser.py &&
+             python manage.py runserver 0.0.0.0:8080"
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=True
+      - DJANGO_SECRET_KEY=your_secret_key
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_NAME=your_db_name
+      - DJANGO_DB_USER=your_db_user
+      - DJANGO_DB_PASSWORD=your_db_password
+
+  # Serviço do banco de dados PostgreSQL
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: your_db_name
+      POSTGRES_USER: your_db_user
+      POSTGRES_PASSWORD: your_db_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Volumes para persistir os dados do banco
+volumes:
+  postgres_data:
